@@ -25,7 +25,7 @@ __END__
 
 =head1 NAME
 
-usw - use utf8; use strict; use warnings; In one line.
+usw - use utf8; use strict; use warnings; in one line.
 
 =head1 SYNOPSIS
 
@@ -38,7 +38,31 @@ usw - use utf8; use strict; use warnings; In one line.
   
 =head1 DESCRIPTION
 
-usw is a shortcut mainly for one-liner.
+usw is a shortcut pragma mostly for one-liners.
+
+May be useful for those who write the above code every single time
+
+=head2 HOW TO USE
+
+  use usw;
+
+It is a kind of pragmas but doesn't spent
+L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
+because overusing it is nonsense.
+
+C<use usw;> should be just the very shortcut at beginning of your codes
+
+Therefore, if you want to set C<no>, you should do it the same way as before.
+
+ no strict;
+ no warnings;
+ no utf8;
+
+These still work as expected everywhere.
+
+And writing like this doesn't work
+
+ no usw;
 
 =head1 LICENSE
 

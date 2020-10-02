@@ -1,5 +1,5 @@
 {
-   "abstract" : "use utf8; use strict; use warnings; In one line.",
+   "abstract" : "use utf8; use strict; use warnings; in one line.",
    "author" : [
       "Yuki Yoshida(L<worthmine|https://github.com/worthmine>)"
    ],

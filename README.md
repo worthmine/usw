@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/worthmine/usw.svg?branch=master)](https://travis-ci.com/worthmine/usw)
 # NAME
 
-usw - use utf8; use strict; use warnings; In one line.
+usw - use utf8; use strict; use warnings; in one line.
 
 # SYNOPSIS
 
@@ -15,7 +15,31 @@ usw - use utf8; use strict; use warnings; In one line.
 
 # DESCRIPTION
 
-usw is a shortcut mainly for one-liner.
+usw is a shortcut pragma mostly for one-liners.
+
+May be useful for those who write the above code every single time
+
+## HOW TO USE
+
+    use usw;
+
+It is a kind of pragmas but doesn't spent
+[%^H](https://metacpan.org/pod/perlpragma#Key-naming)
+because overusing it is nonsense.
+
+`use usw;` should be just the very shortcut at beginning of your codes
+
+Therefore, if you want to set `no`, you should do it the same way as before.
+
+    no strict;
+    no warnings;
+    no utf8;
+
+These still work as expected everywhere.
+
+And writing like this doesn't work
+
+    no usw;
 
 # LICENSE
 

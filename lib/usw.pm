@@ -13,9 +13,7 @@ sub import {
     warnings->import( 'all', FATAL => 'recursion' );
     utf8->import;
 
-    local $| = 0;
-
-    #binmode \*STDOUT, ':encoding(UTF-8)'; # does NOT need?
+    binmode \*STDOUT, ':encoding(UTF-8)';
     binmode \*STDERR, ':encoding(UTF-8)';
     return;
 }
@@ -27,12 +25,16 @@ __END__
 
 =head1 NAME
 
-usw - It's new $module
+usw - use utf8; use strict; use warnings; In one line.
 
 =head1 SYNOPSIS
 
-    use usw;
-
+ use usw; # just 8 bytes for instead of below:
+ use utf8;
+ use strict;
+ use warnings;
+ binmode STDERR, ':encoding(UTF-8)';
+ 
 =head1 DESCRIPTION
 
 usw is ...
@@ -46,7 +48,6 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-worthmine E<lt>worthmine@gmail.comE<gt>
+Yuki Yoshida(L<worthmine|https://github.com/worthmine>)
 
 =cut
-

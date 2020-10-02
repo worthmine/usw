@@ -1,11 +1,16 @@
 [![Build Status](https://travis-ci.com/worthmine/usw.svg?branch=master)](https://travis-ci.com/worthmine/usw)
 # NAME
 
-usw - It's new $module
+usw - use utf8; use strict; use warnings; In one line.
 
 # SYNOPSIS
 
-    use usw;
+    use usw; # just 8 bytes for instead of below:
+    use utf8;
+    use strict;
+    use warnings;
+    binmode STDERR, ':encoding(UTF-8)';
+    
 
 # DESCRIPTION
 
@@ -20,4 +25,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-worthmine <worthmine@gmail.com>
+Yuki Yoshida([worthmine](https://github.com/worthmine))

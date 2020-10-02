@@ -10,7 +10,7 @@
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "usw",
    "no_index" : {
@@ -52,8 +52,19 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/worthmine/usw/issues"
+      },
+      "homepage" : "https://github.com/worthmine/usw",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/worthmine/usw.git",
+         "web" : "https://github.com/worthmine/usw"
+      }
+   },
    "version" : "0.01",
    "x_authority" : "cpan:WORTHMINE",
-   "x_serialization_backend" : "JSON::PP version 2.27400_02",
+   "x_serialization_backend" : "JSON::PP version 4.05",
    "x_static_install" : 1
 }

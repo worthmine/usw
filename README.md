@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/worthmine/usw.svg?branch=master)](https://travis-ci.com/worthmine/usw)
 # NAME
 
 usw - It's new $module

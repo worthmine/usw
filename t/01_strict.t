@@ -9,7 +9,7 @@ is $@, '', "Successfully ignored a declaration without `my`";
 use usw;                          # turn it on
 
 my $outer = eval q( $inner = 'strings'; );    # with no `my`
-is $outer, undef, "successfully failed to evaluate";
+is $outer, undef, "Successfully failed to evaluate";
 like $@,
     qr/^Global symbol "\$inner" requires explicit package name/,
     "Successfully detected a declaration missing `my`";

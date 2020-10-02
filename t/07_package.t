@@ -3,9 +3,15 @@ use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use lib 'lib';
 
 my @array = qw(0 1 2 3 4 5 6 7 8 9);
-my $qr = qr/^(?:Variable "\$inner" is not imported|Argument "2:" isn't numeric in addition \(\+\))/;
+my $qr1   = qr/^Global symbol "\$inner" requires explicit package name/;
+my $qr2
+    = qr/^(?:Variable "\$inner" is not imported|Argument "2:" isn't numeric in addition \(\+\))/;
+
 local $SIG{__WARN__} = sub {
-    like $_[0], $qr, 'warnings pragma DOES work now';
+    return if $_[0] =~ $qr1;
+    $_[0] =~ /^Variable/
+        ? like $_[0], $qr2, 'warnings pragma DOES work now'
+        : die $_[0];
 };
 
 subtest 'Before package' => \&::test4off;
@@ -15,12 +21,12 @@ use Test::More 0.98;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use usw;    # turn it on
 subtest 'Inner package' => sub {
-    no warnings;
-    my $outer = eval q( $inner = 'strings'; );    # with no `my`
-    is( defined $outer, '', "successfully failed to evaluate" );
+    plan tests => 4;
 
-    use warnings;
-    eval { my $a = "2:" + 3; };                   # isn't numeric
+    my $outer = eval q( $inner = 'strings'; );    # with no `my`
+    like $@, $qr1, "Successfully detected a declaration missing `my`";
+
+    eval { my $a = "2:" + 3; } or pass("Successfully die");    # isn't numeric
 
     my $plain   = '宣言あり';
     my $encoded = encode_utf8($plain);

@@ -16,20 +16,20 @@ local $SIG{__WARN__} = sub {
 no utf8;
 use strict;
 use warnings;
-my $plain = decode_utf8 'ut8の文字列';
+my $decoded = decode_utf8 'ut8の文字列';
 
 binmode \*STDOUT;    # set to default
 
-eval { say STDOUT $plain } or pass("dies when no binmode");
+eval { say STDOUT $decoded } or pass("dies when no binmode");
 
 require usw;         # turn it on
 usw->import;
 no utf8;
 
-eval { say STDOUT $plain } and pass("setting bimmode automatically");
+eval { say STDOUT $decoded } and pass("setting bimmode automatically");
 
 binmode \*STDOUT;    # set to default again
 
-eval { say STDOUT $plain } or pass("dies when no binmode");
+eval { say STDOUT $decoded } or pass("dies when no binmode");
 
 done_testing;

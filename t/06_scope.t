@@ -1,36 +1,26 @@
-use Test::More 0.98 tests => 6;
-use Encode qw(is_utf8 encode_utf8 decode_utf8);
+use Test::More 0.98 tests => 3;
 use lib 'lib';
-use feature qw(say);
 
-local $SIG{__WARN__} = sub {
-    $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
-    if ( $1 and $1 == 28 ) {
-        fail "it's not a expected flow";
-    } else {
-        pass "succeeded to catch an error: $_[0]";
-        die $_[0];
-    }
+my @array = qw(0 1 2 3 4 5 6 7 8 9);
+
+$SIG{__WARN__} = sub {
+    like $_[0], qr/^\QArgument "2:" isn't numeric in addition (+)/,
+        , 'warnings pragma DOES work now';
 };
 
-no utf8;
-use strict;
-use warnings;
-my $plain = decode_utf8 'ut8の文字列';
+no warnings;    # Of course it defaults no, but declare it explicitly
 
-binmode \*STDOUT;    # set to default
+eval { my $a = "2:" + 3; };    # isn't numeric
 
-eval { say STDOUT $plain } or pass("dies when no binmode");
+is $@, '', 'warnings pragma does NOT work yet';
 
 {
-    use usw;         # turn it on
-    no utf8;
-    eval { say STDOUT $plain and pass("setting bimmode automatically"); }
-        and pass("when use usw;");
+    use usw;                       # turn it on
+    eval { my $a = "2:" + 3; };    # isn't numeric
 }
 
-binmode \*STDOUT;    # set to default again
+eval { my $a = "2:" + 3; };        # isn't numeric
 
-eval { say STDOUT $plain } or pass("dies when no binmode");
+is $@, '', 'warnings pragma does NOT work again';
 
 done_testing;

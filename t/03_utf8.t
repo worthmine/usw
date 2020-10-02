@@ -19,7 +19,7 @@ $plain   = '宣言あり';
 $encoded = encode_utf8($plain);
 is is_utf8($plain), 1, "$encoded is DECODED automatically";
 
-#is is_utf8($plain), 1, "$plain is DECODED automatically";
+#is is_utf8($plain), 1, "$plain is DECODED automatically"; # does not work well
 
 no utf8;    # turn it off again
 

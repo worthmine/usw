@@ -5,7 +5,7 @@ usw - use utf8; use strict; use warnings; In one line.
 
 # SYNOPSIS
 
-    use usw; # just 8 bytes for instead of below:
+    use usw; # is just 8 bytes pragma instead of below:
     use utf8;
     use strict;
     use warnings;

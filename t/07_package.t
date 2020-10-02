@@ -3,10 +3,9 @@ use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use lib 'lib';
 
 my @array = qw(0 1 2 3 4 5 6 7 8 9);
-
-$SIG{__WARN__} = sub {
-    like $_[0], qr/^\QArgument "2:" isn't numeric in addition (+)/,
-        , 'warnings pragma DOES work now';
+my $qr = qr/^(?:Variable "\$inner" is not imported|Argument "2:" isn't numeric in addition \(\+\))/;
+local $SIG{__WARN__} = sub {
+    like $_[0], $qr, 'warnings pragma DOES work now';
 };
 
 subtest 'Before package' => \&::test4off;

@@ -3,9 +3,14 @@ use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use lib 'lib';
 use feature qw(say);
 
-my $qr = qr/^Wide character/;
 local $SIG{__WARN__} = sub {
-    like $_[0], $qr, "succeeded to catch an error: $_[0]";
+    $_[0] =~ /^Wide character in say .* line (\d+)\.$/;
+    if ( $1 and $1 == 28 ) {
+        ok $1, "setting bimmode automatically";
+    } else {
+        ok $1, "succeeded to catch an error: $_[0]";
+        die $_[0];
+    }
 };
 
 no utf8;
@@ -14,14 +19,17 @@ use warnings;
 my $plain = decode_utf8 'ut8の文字列';
 binmode \*STDERR;
 
-say STDERR $plain and pass("no binmode");
+eval { say STDERR $plain } or pass("dies when no binmode");
 
-use usw;    # turn it on
+require usw;    # turn it on
+usw->import;
+no utf8;
 
-say STDERR $plain and pass("when use usw;");
+eval { say STDERR $plain and pass("setting bimmode automatically"); }
+    and pass("when use usw;");
 
 binmode \*STDERR;    # turn it off again
 
-say STDERR $plain and pass("no binmode");
+eval { say STDERR $plain } or pass("dies when no binmode");
 
 done_testing;

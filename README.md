@@ -9,12 +9,13 @@ usw - use utf8; use strict; use warnings; In one line.
     use utf8;
     use strict;
     use warnings;
-    binmode STDERR, ':encoding(UTF-8)';
-    
+    binmode \*STDOUT, ':encoding(UTF-8)';
+    binmode \*STDERR, ':encoding(UTF-8)';
+     
 
 # DESCRIPTION
 
-usw is ...
+usw is a shortcut mainly for one-liner.
 
 # LICENSE
 

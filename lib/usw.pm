@@ -33,11 +33,12 @@ usw - use utf8; use strict; use warnings; In one line.
  use utf8;
  use strict;
  use warnings;
- binmode STDERR, ':encoding(UTF-8)';
- 
+ binmode \*STDOUT, ':encoding(UTF-8)';
+ binmode \*STDERR, ':encoding(UTF-8)';
+  
 =head1 DESCRIPTION
 
-usw is ...
+usw is a shortcut mainly for one-liner.
 
 =head1 LICENSE
 

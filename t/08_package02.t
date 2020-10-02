@@ -9,29 +9,30 @@ $SIG{__WARN__} = sub {
         , 'warnings pragma DOES work now';
 };
 
-subtest 'Before package' => \&test4off;
+subtest 'Before package' => \&::test4off;
 
-package Some {
-    use Test::More 0.98;
-    use Encode qw(is_utf8 encode_utf8 decode_utf8);
-    use usw;    # turn it on
-    subtest 'Inner package' => sub {
-        my $outer = eval q( $inner = 'strings'; );    # with no `my`
-        is( defined $outer, '', "successfully failed to evaluate" );
+package Some;
+use Test::More 0.98;
+use Encode qw(is_utf8 encode_utf8 decode_utf8);
+use usw;    # turn it on
+subtest 'Inner package' => sub {
+    no warnings;
+    my $outer = eval q( $inner = 'strings'; );    # with no `my`
+    is( defined $outer, '', "successfully failed to evaluate" );
 
-        eval { my $a = "2:" + 3; };                   # isn't numeric
+    use warnings;
+    eval { my $a = "2:" + 3; };                   # isn't numeric
 
-        my $plain   = '宣言あり';
-        my $encoded = encode_utf8($plain);
-        is is_utf8($plain), 1, "$encoded is DECODED automatically";
-    };
-}
+    my $plain   = '宣言あり';
+    my $encoded = encode_utf8($plain);
+    is is_utf8($plain), 1, "$encoded is DECODED automatically";
+};
 
-subtest 'After package' => \&test4off;
+subtest 'After package' => \&::test4off;
 
 done_testing;
 
-sub test4off {
+sub ::test4off {
     plan tests => 3;
     no strict;    # Of course it defaults no, but declare it explicitly
     no warnings;
@@ -52,4 +53,3 @@ sub test4off {
     my $plain = '宣言なし';
     is is_utf8($plain), '', "$plain is NOT decoded yet";
 }
-

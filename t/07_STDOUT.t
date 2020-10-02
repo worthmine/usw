@@ -4,9 +4,9 @@ use lib 'lib';
 use feature qw(say);
 
 local $SIG{__WARN__} = sub {
-    $_[0] =~ /^Wide character in say .* line (\d+)\.$/;
+    $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
     if ( $1 and $1 == 29 ) {
-        ok $1, "setting bimmode automatically";
+        fail "it's not a expected flow";
     } else {
         ok $1, "succeeded to catch an error: $_[0]";
         die $_[0];

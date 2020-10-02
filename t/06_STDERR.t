@@ -4,7 +4,7 @@ use lib 'lib';
 use feature qw(say);
 
 local $SIG{__WARN__} = sub {
-    $_[0] =~ /^Wide character in say .* line (\d+)\.$/;
+    $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
     if ( $1 and $1 == 28 ) {
         ok $1, "setting bimmode automatically";
     } else {

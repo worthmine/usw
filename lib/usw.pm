@@ -13,7 +13,7 @@ sub import {
     warnings->import( 'all', FATAL => 'recursion' );
     utf8->import;
 
-    binmode \*STDERR, ':encoding(UTF-8)';
+    binmode \*STDOUT, ':encoding(UTF-8)';
     binmode \*STDERR, ':encoding(UTF-8)';
     return;
 }

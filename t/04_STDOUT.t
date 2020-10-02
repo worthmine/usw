@@ -6,7 +6,7 @@ use feature qw(say);
 local $SIG{__WARN__} = sub {
     $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
     if ( $1 and $1 == 29 ) {
-        fail "it's not a expected flow";
+        fail "it's not a expected warn";
     } else {
         pass "succeeded to catch an error: $_[0]";
         die $_[0];
@@ -26,7 +26,8 @@ require usw;         # turn it on
 usw->import;
 no utf8;
 
-eval { say STDOUT $decoded } and pass("setting bimmode automatically");
+eval { say STDOUT $decoded } and pass("when usw was called");
+note $@;
 
 binmode \*STDOUT;    # set to default again
 

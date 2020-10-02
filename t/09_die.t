@@ -10,6 +10,8 @@ local $SIG{__DIE__} = sub {
 
 no utf8;    # Of course it defaults no, but declare it explicitly
 
+note "these tests have always passed";
+
 my $plain = '宣言なし';
 eval { die $plain };
 my $decoded = decode_utf8($plain);

@@ -1,18 +1,18 @@
-use Test::More 0.98 tests => 8;
+use Test::More 0.98 tests => 6;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use lib 'lib';
 use feature qw(say);
 use List::Util qw(first);
 $SIG{__WARN__} = sub {
-    $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
-    is_utf8( $_[0] )
-        ? die encode_utf8 $_[0]
-        : pass("plain text $1 was warned");
-};
-local $SIG{__DIE__} = sub {
-    $_[0] =~ /line (\d+)\.$/;
-    if ( $1 == 37 ) {
-        note "it's a expected flow: $1";
+    use usw;
+    $_[0] =~ /(.+) line (\d+)\.$/;
+    return pass("plain text $1 was warned") unless is_utf8($1);
+    my $encoded = encode_utf8 $_[0];
+    if ( $_[0] =~ qr/^宣言/ ) {
+        fail "code is broken" if $encoded ne '\u{5BA3}\u{8A00}\u{3042}\u{308A}';
+        pass "it's an expected warning: $encoded";
+    } else {
+        fail "it's an unexpected warning: $encoded";
     }
 };
 
@@ -20,25 +20,17 @@ no utf8;    # Of course it defaults no, but declare it explicitly
 use strict;
 use warnings;
 
+note "these tests have always passed";
+
 my $plain = '宣言なし';
 eval { warn $plain } and pass("$plain is a plain");
-my $decoded = decode_utf8($plain);
-eval { warn $decoded } or pass("fail to die with decoded warns");
-my $encoded = encode_utf8($decoded);
-eval { warn $encoded } and pass("$encoded is a plain");
 
-require usw;    # turn it on
-usw->import;
+{
+    use usw;    # turn it on
+    my $decoded = '宣言あり';
+    eval { warn encode_utf8 $decoded } and pass("pass to warn with decoded strings");
+}
 
-use usw;
-
-$plain = '宣言あり';
-
-eval { warn $plain } or pass("pass to warn with decoded strings");
-
-no utf8;        # turn it off again
-
-$plain = '再び宣言なし';
 eval { warn $plain } and pass("$plain is a plain");
 
 done_testing;

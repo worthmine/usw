@@ -32,4 +32,5 @@ eval { say STDOUT $plain and pass("setting bimmode automatically"); }
 binmode \*STDOUT;    # set to default again
 
 eval { say STDOUT $plain } or pass("dies when no binmode");
+
 done_testing;

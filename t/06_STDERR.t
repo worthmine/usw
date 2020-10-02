@@ -6,7 +6,7 @@ use feature qw(say);
 local $SIG{__WARN__} = sub {
     $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
     if ( $1 and $1 == 28 ) {
-        ok $1, "setting bimmode automatically";
+        fail "it's not a expected flow";
     } else {
         ok $1, "succeeded to catch an error: $_[0]";
         die $_[0];
@@ -17,6 +17,7 @@ no utf8;
 use strict;
 use warnings;
 my $plain = decode_utf8 'ut8の文字列';
+
 binmode \*STDERR;
 
 eval { say STDERR $plain } or pass("dies when no binmode");

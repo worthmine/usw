@@ -46,7 +46,7 @@ May be useful for those who write the above code every single time
 
   use usw;
 
-It is a kind of pragmas but doesn't spent
+It seems a kind of pragmas but doesn't spent
 L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
 because overusing it is nonsense.
 

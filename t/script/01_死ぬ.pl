@@ -32,6 +32,6 @@ sub swicth {
     state $keep = $SIG{__DIE__};
     $SIG{__DIE__}
         = $flag
-        ? sub { return &$keep( $_[0] ) }
-        : sub { return $_[0] };
+        ? sub { &$keep( $_[0] ) }
+        : sub { $_[0] };
 }

@@ -85,7 +85,7 @@ And writing like this doesn't work
 
  no usww;
 
-=head2 Automatically repairs potential bugs around encoding  
+=head2 Automatically repairs bugs around file path which is encoded
 
 It replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
 to avoid the bug(This may be a strange specification)

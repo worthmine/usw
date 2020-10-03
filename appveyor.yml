@@ -1,0 +1,8 @@
+version: 2.0.{build}
+branches:
+  only:
+  - dev
+before_test:
+- sh: cpanm --installdeps --notest --quiet --with-configure --with-develop .
+after_test:
+- sh: prove -lvr t

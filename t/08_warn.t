@@ -2,7 +2,7 @@ use Test::More 0.98 tests => 6;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use lib 'lib';
 use feature qw(say);
-use List::Util qw(first);
+
 local $SIG{__WARN__} = sub {
     use usw;
     $_[0] =~ /(.+) line (\d+)\.$/;

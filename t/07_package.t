@@ -3,8 +3,7 @@ use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use version;
 use lib 'lib';
 
-my @array = qw(0 1 2 3 4 5 6 7 8 9);
-my $qr1   = qr/^Global symbol "\$inner" requires explicit package name/;
+my $qr1 = qr/^Global symbol "\$inner" requires explicit package name/;
 my $qr2
     = qr/^(?:Variable "\$inner" is not imported|Argument "2:" isn't numeric in addition \(\+\))/;
 

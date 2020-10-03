@@ -12,14 +12,16 @@ SKIP: {
     my $GetOutputCP;
     unless ($@) {
 
-        #ok my $GetInputCP  = sub {&Win32::GetConsoleCP},      "succeed to include GetInputCP()";
-        ok $GetOutputCP = sub {&Win32::Console::OutputCP}, "succeed to include GetOutputCP()";
+        ok my $GetInputCP = sub {&Win32::GetConsoleCP}, "succeed to include GetInputCP()";
+
+        #ok $GetOutputCP = sub {&Win32::Console::OutputCP}, "succeed to include GetOutputCP()";
     }
 
     #my $cp                  = &$GetInputCP();
     #my $ENCODING_CONSOLE_IN = "cp$cp", if $cp;
     #ok $ENCODING_CONSOLE_IN, "succeed to set ENCODING_CONSOLE_IN";
-    my $cp                   = &$GetOutputCP();
+    #my $cp                   = &$GetOutputCP();
+    my $cp                   = &$GetInputCP();
     my $ENCODING_CONSOLE_OUT = "cp$cp" if $cp;
     ok $ENCODING_CONSOLE_OUT , "succeed to set ENCODING_CONSOLE_OUT";
     if ($ENCODING_CONSOLE_OUT) {

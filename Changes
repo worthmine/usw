@@ -2,6 +2,9 @@ Revision history for Perl extension usw
 
 {{$NEXT}}
 
+0.02 2020-10-03T03:25:23Z
+    - start to require v5.12.5 or later
+
 0.01 2020-10-02T14:48:03Z
 
     - original version

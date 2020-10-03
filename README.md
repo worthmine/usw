@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/worthmine/usw.svg?branch=master)](https://travis-ci.com/worthmine/usw)
+[![Build Status](https://travis-ci.com/worthmine/usw.svg?branch=master)](https://travis-ci.com/worthmine/usw) [![Build Status](https://img.shields.io/appveyor/ci/worthmine/usw/master.svg?logo=appveyor)](https://ci.appveyor.com/project/worthmine/usw/branch/master)
 # NAME
 
 usw - use utf8; use strict; use warnings; in one line.

@@ -1,5 +1,6 @@
-use Test::More 0.98 tests => 3;
+use Test::More 0.98 tests => 4;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
+use version;
 use lib 'lib';
 
 my @array = qw(0 1 2 3 4 5 6 7 8 9);
@@ -16,11 +17,26 @@ local $SIG{__WARN__} = sub {
 
 subtest 'Before package' => \&::test4off;
 
-package Some;
+SKIP: {
+    skip "elder Perl version", 1 if version->parse($]) lt 5.014.000;
+    eval <<'EOL' or fail("fail to evaluate");
+package Inner {    # syntax error in 5.12.5 or elder
+    ::subtest 'Inner package' => \&::inner;
+}
+EOL
+}
+
+package Outer;
 use Test::More 0.98;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use usw;    # turn it on
-subtest 'Inner package' => sub {
+
+subtest 'Inner package' => \&::inner;
+subtest 'After package' => \&::test4off;
+
+done_testing;
+
+sub ::inner {
     plan tests => 4;
 
     my $outer = eval q( $inner = 'strings'; );    # with no `my`
@@ -31,11 +47,7 @@ subtest 'Inner package' => sub {
     my $plain   = '宣言あり';
     my $encoded = encode_utf8($plain);
     is is_utf8($plain), 1, "$encoded is DECODED automatically";
-};
-
-subtest 'After package' => \&::test4off;
-
-done_testing;
+}
 
 sub ::test4off {
     plan tests => 3;

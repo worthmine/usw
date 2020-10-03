@@ -47,6 +47,7 @@
       },
       "test" : {
          "requires" : {
+            "Data::Dumper::AutoEncode" : "1.00",
             "Test::More" : "1.302181"
          }
       }

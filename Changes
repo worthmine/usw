@@ -2,6 +2,9 @@ Revision history for Perl extension usw
 
 {{$NEXT}}
 
+0.04 2020-10-03T15:24:06Z
+    - became helpful on Windows
+
 0.03 2020-10-03T12:22:14Z
     - be able to replace $SIG{__WARN__} and/or $SIG{__DIE__}
 

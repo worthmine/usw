@@ -3,14 +3,14 @@ use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use version;
 use lib 'lib';
 
-my $qr1 = qr/^Global symbol "\$inner" requires explicit package name/;
-my $qr2
-    = qr/^(?:Variable "\$inner" is not imported|Argument "2:" isn't numeric in addition \(\+\))/;
-
+my @qr = (
+    qr/^Global symbol "\$inner" requires explicit package name/,
+    qr/^(?:Variable "\$inner" is not imported|Argument "2:" isn't numeric in addition \(\+\))/,
+);
 local $SIG{__WARN__} = sub {
-    return if $_[0] =~ $qr1;
+    return if $_[0] =~ $qr[0];
     $_[0] =~ /^Variable/
-        ? like $_[0], $qr2, 'warnings pragma DOES work now'
+        ? like $_[0], $qr[1], 'warnings pragma DOES work now'
         : die $_[0];
 };
 
@@ -39,7 +39,7 @@ sub ::inner {
     plan tests => 4;
 
     my $outer = eval q( $inner = 'strings'; );    # with no `my`
-    like $@, $qr1, "Successfully detected a declaration missing `my`";
+    like $@, $qr[0], "Successfully detected a declaration missing `my`";
 
     eval { my $a = "2:" + 3; } or pass("Successfully die");    # isn't numeric
 

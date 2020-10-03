@@ -85,9 +85,11 @@ Since version 0.03, you can write like this:
 
  use usw qw(warn die);
 
-these options replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
+These options replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
 to avoid the bug(This may be a strange specification)
-of encoding only the file path.
+of encoding only the file path like that:
+
+ 宣言あり at t/script/00_è­¦åãã.pl line 19.
 
 This import is B<only> if written.
 

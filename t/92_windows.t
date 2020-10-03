@@ -26,7 +26,7 @@ SKIP: {
     my $ENCODING_CONSOLE_OUT = "cp$cp" if $cp;
     ok $ENCODING_CONSOLE_OUT , "succeed to set ENCODING_CONSOLE_OUT";
     if ($ENCODING_CONSOLE_OUT) {
-        eval "use usw ($ENCODING_CONSOLE_OUT)";
+        eval "use usw qw($ENCODING_CONSOLE_OUT)";
         fail "fail to import as a pragma: $@" if $@;
     } else {
         pass "nothing to do";

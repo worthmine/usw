@@ -97,6 +97,15 @@ of encoding only the file path like that:
 
 This import is B<only> if written.
 
+Since version 0.04, you can write like this:
+
+ use usw qw(cp932);
+
+This option changes at once C<STDIN>,C<STDOUT>,C<STDERR> to C<cp\d+>
+
+defaults to C<UTF-8> and should B<NOT> be set except on Windows.
+
+
 =head1 LICENSE
 
 Copyright (C) worthmine.

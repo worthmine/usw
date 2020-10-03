@@ -55,6 +55,14 @@ of encoding only the file path like that:
 
 This import is **only** if written.
 
+Since version 0.04, you can write like this:
+
+    use usw qw(cp932);
+
+This option changes at once `STDIN`,`STDOUT`,`STDERR` to `cp\d+`
+
+defaults to `UTF-8` and should **NOT** be set except on Windows.
+
 # LICENSE
 
 Copyright (C) worthmine.

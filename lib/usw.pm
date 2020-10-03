@@ -1,24 +1,39 @@
 package usw;
-use 5.008001;
+use 5.012005;
 
 our $VERSION = "0.02";
 
-use Encode qw(encode_utf8 decode_utf8);
+use Encode qw(is_utf8 encode_utf8 decode_utf8);
+use utf8();
 use strict();
 use warnings();
-use utf8();
+use List::Util qw(first);
 
 sub import {
+    utf8->import;
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
-    utf8->import;
 
     binmode \*STDOUT, ':encoding(UTF-8)';
     binmode \*STDERR, ':encoding(UTF-8)';
+    return unless @_;
+
+    $SIG{__WARN__} = \&_redecode if first { $_ eq 'warn' } @_;
+    $SIG{__DIE__}  = sub { die _redecode(@_) }
+        if first { $_ eq 'die' } @_;
     return;
 }
 
+sub _redecode {
+    $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
+    my @texts = split $2, $_[0];
+    return is_utf8($1)
+        ? $texts[0] . decode_utf8 $2. $texts[1]
+        : decode_utf8 $_[0];
+}
+
 1;
+
 __END__
 
 =encoding utf-8

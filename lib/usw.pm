@@ -1,5 +1,5 @@
 package usw;
-use 5.008001;
+use 5.012005;
 
 our $VERSION = "0.01";
 
@@ -18,12 +18,13 @@ sub import {
     binmode \*STDERR, ':encoding(UTF-8)';
     return unless @_;
 
-    $SIG{__WARN__} = \&decoded if first { $_ eq 'warn' } @_;
-    $SIG{__DIE__}  = \&decoded if first { $_ eq 'die' } @_;
+    $SIG{__WARN__} = \&_redecode if first { $_ eq 'warn' } @_;
+    $SIG{__DIE__}  = sub { die _redecode(@_) }
+        if first { $_ eq 'die' } @_;
     return;
 }
 
-sub decoded {
+sub _redecode {
     $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
     my @texts = split $2, $_[0];
     return is_utf8($1)

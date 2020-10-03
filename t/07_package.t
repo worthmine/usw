@@ -18,7 +18,7 @@ local $SIG{__WARN__} = sub {
 subtest 'Before package' => \&::test4off;
 
 SKIP: {
-    skip "elder Perl version", 1 if version->parse($]) lt 5.014.000;
+    skip "elder Perl version", 1 if version->parse($]) lt '5.014.000';
     eval <<'EOL' or fail("fail to evaluate");
 package Inner {    # syntax error in 5.12.5 or elder
     ::subtest 'Inner package' => \&::inner;

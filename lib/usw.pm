@@ -14,13 +14,19 @@ sub import {
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
-    binmode \*STDOUT, ':encoding(UTF-8)';
-    binmode \*STDERR, ':encoding(UTF-8)';
+    #my $in  = 'UTF-8';
+
+    my $out = first { $_ =~ /^cp\d+$/ } @_;
+    $out ||= 'UTF-8';
+
+    binmode \*STDOUT, ":encoding($out)";
+    binmode \*STDERR, ":encoding($out)";
     return unless @_;
 
     $SIG{__WARN__} = \&_redecode if first { $_ eq 'warn' } @_;
     $SIG{__DIE__}  = sub { die _redecode(@_) }
         if first { $_ eq 'die' } @_;
+
     return;
 }
 

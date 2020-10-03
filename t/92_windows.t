@@ -9,10 +9,11 @@ my $tests = 3;
 SKIP: {
     skip "it's NOT a Windows OS", $tests unless $^O eq "MSWin32";
     eval { require Win32 } or die "install 'Win32' module at first", $tests;
+    my $GetInputCP;
     my $GetOutputCP;
     unless ($@) {
 
-        ok my $GetInputCP = sub {&Win32::GetConsoleCP}, "succeed to include GetInputCP()";
+        ok $GetInputCP = sub {&Win32::GetConsoleCP}, "succeed to include GetInputCP()";
 
         #ok $GetOutputCP = sub {&Win32::Console::OutputCP}, "succeed to include GetOutputCP()";
     }

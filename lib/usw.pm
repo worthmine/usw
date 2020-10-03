@@ -1,7 +1,7 @@
 package usw;
 use 5.012005;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -78,6 +78,18 @@ These still work as expected everywhere.
 And writing like this doesn't work
 
  no usw;
+
+=head2 OPTIONS
+
+Since version 0.03, you can write like this:
+
+ use usw qw(warn die);
+
+these options replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
+to avoid the bug(This may be a strange specification)
+of encoding only the file path.
+
+This import is B<only> if written.
 
 =head1 LICENSE
 

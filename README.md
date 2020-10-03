@@ -41,6 +41,18 @@ And writing like this doesn't work
 
     no usw;
 
+## OPTIONS
+
+Since version 0.03, you can write like this:
+
+    use usw qw(warn die);
+
+these options replaces `$SIG{__WARN__}` or/and `$SIG{__DIE__}`
+to avoid the bug(This may be a strange specification)
+of encoding only the file path.
+
+This import is **only** if written.
+
 # LICENSE
 
 Copyright (C) worthmine.

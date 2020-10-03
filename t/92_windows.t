@@ -9,19 +9,7 @@ my $tests = 3;
 SKIP: {
     skip "it's NOT a Windows OS", $tests unless $^O eq "MSWin32";
     eval { require Win32 } or die "install 'Win32' module at first", $tests;
-    my $GetInputCP;
-    my $GetOutputCP;
-    unless ($@) {
-
-        ok $GetInputCP = sub {&Win32::GetConsoleCP}, "succeed to include GetInputCP()";
-
-        #ok $GetOutputCP = sub {&Win32::Console::OutputCP}, "succeed to include GetOutputCP()";
-    }
-
-    #my $cp                  = &$GetInputCP();
-    #my $ENCODING_CONSOLE_IN = "cp$cp", if $cp;
-    #ok $ENCODING_CONSOLE_IN, "succeed to set ENCODING_CONSOLE_IN";
-    #my $cp                   = &$GetOutputCP();
+    ok my $GetInputCP = sub {&Win32::GetConsoleCP}, "succeed to include GetInputCP()" unless $@;
     my $cp                   = &$GetInputCP();
     my $ENCODING_CONSOLE_OUT = "cp$cp" if $cp;
     ok $ENCODING_CONSOLE_OUT , "succeed to set ENCODING_CONSOLE_OUT";

@@ -2,6 +2,9 @@ Revision history for Perl extension usw
 
 {{$NEXT}}
 
+0.05 2020-10-04T02:31:32Z
+    - forked usww especially for Windows
+
 0.04 2020-10-03T15:24:06Z
     - became helpful on Windows
 
@@ -12,6 +15,4 @@ Revision history for Perl extension usw
     - start to require v5.12.5 or later
 
 0.01 2020-10-02T14:48:03Z
-
     - original version
-

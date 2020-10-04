@@ -1,7 +1,5 @@
 use Test::Builder;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
-use feature qw(say);
-
 use lib 'lib';
 
 use usw;
@@ -9,8 +7,6 @@ use usw;
 my $Test = Test::Builder->new();
 $Test->plan( tests => 3 );
 my $plan = 10;
-
-open my $fh, '>>', '/tmp/done.txt' or die $!;
 
 binmode \*STDIN;    # reset to default
 $Test->subtest( 'Before' => \&judgePlain, reader() );
@@ -22,8 +18,6 @@ binmode \*STDIN;                        # reset to default again
 $Test->subtest( 'After' => \&judgePlain, reader() );
 
 $Test->done_testing();
-
-say STDERR $Test->current_test();
 
 exit;
 

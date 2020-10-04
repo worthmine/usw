@@ -50,7 +50,7 @@ sub reader {
             push @in, $_;
         }
     } else {
-        $Test->BAIL_OUT("no data");
+        $Test->BAIL_OUT("you have to use pipe");
     }
     return @in;
 }

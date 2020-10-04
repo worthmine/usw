@@ -43,7 +43,7 @@ __END__
 
 =head1 NAME
 
-usww - use utf8; use strict; use warnings; in one line on Windows.
+usww - use usw; Especially for Windows.
 
 =head1 SYNOPSIS
 

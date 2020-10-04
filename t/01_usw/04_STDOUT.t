@@ -6,7 +6,7 @@ use feature qw(say);
 no utf8;
 use strict;
 use warnings;
-my $decoded = decode_utf8 'ut8の文字列';
+my $decoded = decode_utf8 'utf8の文字列';
 
 binmode \*STDOUT;    # set to default
 local $SIG{__WARN__} = \&alt_warn;

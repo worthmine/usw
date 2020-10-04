@@ -5,12 +5,11 @@ use feature qw(say);
 use lib 'lib';
 
 use usw;
+
 my $Test = Test::Builder->new();
 $Test->plan( tests => 3 );
 
 my $plan = 10;
-
-#open my $fh, '>>', '/tmp/done.txt';    # prepare to say
 
 binmode \*STDIN;    # set to default
 $Test->subtest( 'Before' => \&judgePlain, reader() );
@@ -23,13 +22,13 @@ $Test->subtest( 'After' => \&judgePlain, reader() );
 
 $Test->done_testing();
 
-exit !$Test->is_passing();
+exit;
 
 sub judgePlain {
     $Test->plan( tests => scalar @_ );
     for ( 1 .. @_ ) {
         local $_ = shift @_;
-        $Test->BAIL_OUT("no length") unless length;
+        die $Test->BAIL_OUT("no length") unless length;
         $Test->is_num( is_utf8($_), !1, $_ );
     }
 }
@@ -38,7 +37,7 @@ sub judgeDecoded {
     $Test->plan( tests => scalar @_ );
     for ( 1 .. @_ ) {
         local $_ = shift @_;
-        $Test->BAIL_OUT("no length") unless length;
+        die $Test->BAIL_OUT("no length") unless length;
         $Test->is_num( is_utf8($_), 1, encode_utf8($_) );    #: fail $_;
     }
 }
@@ -54,7 +53,7 @@ sub reader {
             push @in, $_;
         }
     } else {
-        $Test->BAIL_OUT("no data");
+        die $Test->BAIL_OUT("no data");
     }
     return @in;
 }

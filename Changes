@@ -2,6 +2,9 @@ Revision history for Perl extension usw
 
 {{$NEXT}}
 
+0.06 2020-10-04T04:02:46Z
+    - there is no test for STDIN so drop it
+
 0.05 2020-10-04T02:31:32Z
     - forked usww especially for Windows
 

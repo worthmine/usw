@@ -14,7 +14,7 @@ BEGIN {
 no utf8;
 use strict;
 use warnings;
-my $decoded = decode_utf8 'utf8の文字列';
+my $decoded = decode_utf8 'STDERRのテスト';
 
 binmode \*STDERR;    # set to default
 local $SIG{__WARN__} = \&alt_warn;

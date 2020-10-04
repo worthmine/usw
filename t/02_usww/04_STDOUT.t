@@ -14,7 +14,7 @@ BEGIN {
 no utf8;
 use strict;
 use warnings;
-my $decoded = decode_utf8 'utf8の文字列';
+my $decoded = decode_utf8 'STDOUTのテスト';
 
 binmode \*STDOUT;    # set to default
 local $SIG{__WARN__} = \&alt_warn;
@@ -42,7 +42,7 @@ done_testing;
 
 sub alt_warn {
     $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
-    if ( $1 and $1 == 30 ) {
+    if ( $1 and $1 == 31 ) {
         fail "it's not a expected warn";
     } else {
         pass "succeeded to catch an error: $_[0]";

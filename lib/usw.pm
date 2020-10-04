@@ -14,7 +14,7 @@ sub import {
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
-    binmode \*STDIN,  ":encoding(UTF-8)";
+    #binmode \*STDIN,  ":encoding(UTF-8)";
     binmode \*STDOUT, ":encoding(UTF-8)";
     binmode \*STDERR, ":encoding(UTF-8)";
     return unless @_;
@@ -50,9 +50,10 @@ usw - use utf8; use strict; use warnings; in one line.
  use utf8;
  use strict;
  use warnings;
- binmode STDIN,  ':encoding(UTF-8)';
  binmode STDOUT, ':encoding(UTF-8)';
  binmode STDERR, ':encoding(UTF-8)';
+
+=cut #binmode STDIN,  ':encoding(UTF-8)';
 
 =head1 DESCRIPTION
 

@@ -9,7 +9,6 @@ usw - use utf8; use strict; use warnings; in one line.
     use utf8;
     use strict;
     use warnings;
-    binmode STDIN,  ':encoding(UTF-8)';
     binmode STDOUT, ':encoding(UTF-8)';
     binmode STDERR, ':encoding(UTF-8)';
 

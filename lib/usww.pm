@@ -19,7 +19,7 @@ sub import {
         or die "install 'Win32' module before use it";
     my $encoding = $@ ? 'UTF-8' : "cp$cp";
     $| = 1;    # is this irrelevant?
-    binmode \*STDIN,  ":encoding($encoding)";
+               #binmode \*STDIN,  ":encoding($encoding)";
     binmode \*STDOUT, ":encoding($encoding)";
     binmode \*STDERR, ":encoding($encoding)";
 
@@ -53,9 +53,10 @@ usww - Forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
- binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
+
+=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 

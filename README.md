@@ -61,11 +61,10 @@ use [usww](https://metacpan.org/pod/usww) instead of it running this on Windows.
 
 # SEE ALSO
 
-[usww](https://metacpan.org/pod/usww) - another implement for Windows
-
-[Encode](https://metacpan.org/pod/Encode)
-[binmode](https://perldoc.perl.org/functions/binmode)
-[%SIG](https://perldoc.perl.org/variables/%25SIG)
+- [usww](https://metacpan.org/pod/usww) - another implement for Windows
+- [Encode](https://metacpan.org/pod/Encode)
+- [binmode](https://perldoc.perl.org/functions/binmode)
+- [%SIG](https://perldoc.perl.org/variables/%25SIG)
 
 # LICENSE
 

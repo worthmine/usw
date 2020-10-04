@@ -102,11 +102,17 @@ use L<usww> instead of it running this on Windows.
 
 =head1 SEE ALSO
 
-L<usww> - another implement for Windows
+=over
 
-L<Encode>
-L<binmode|https://perldoc.perl.org/functions/binmode>
-L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+=item L<usww> - another implement for Windows
+
+=item L<Encode>
+
+=item L<binmode|https://perldoc.perl.org/functions/binmode>
+
+=item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+
+=back
 
 =head1 LICENSE
 

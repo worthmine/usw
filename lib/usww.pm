@@ -95,11 +95,19 @@ of encoding only the file path like that:
 
 =head1 SEE ALSO
 
-L<usw> 
-L<Encode>
-L<binmode|https://perldoc.perl.org/functions/binmode>
-L<%SIG|https://perldoc.perl.org/variables/%25SIG>
-L<Win32>
+=over
+
+=item L<usw> - another implement for like UNIX OS
+
+=item L<Encode>
+
+=item L<binmode|https://perldoc.perl.org/functions/binmode>
+
+=item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+
+=item L<Win32>
+
+=back
 
 =head1 LICENSE
 

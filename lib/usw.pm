@@ -1,7 +1,7 @@
 package usw;
 use 5.012005;
 
-our $VERSION = "0.04";
+our $VERSION = "0.06";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -50,9 +50,10 @@ usw - use utf8; use strict; use warnings; in one line.
  use utf8;
  use strict;
  use warnings;
- binmode STDIN,  ':encoding(UTF-8)';
  binmode STDOUT, ':encoding(UTF-8)';
  binmode STDERR, ':encoding(UTF-8)';
+
+=cut #binmode STDIN,  ':encoding(UTF-8)';
 
 =head1 DESCRIPTION
 
@@ -102,11 +103,17 @@ use L<usww> instead of it running this on Windows.
 
 =head1 SEE ALSO
 
-L<usww> - another implement for Windows
+=over
 
-L<Encode>
-L<binmode|https://perldoc.perl.org/functions/binmode>
-L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+=item L<usww> - another implement for Windows
+
+=item L<Encode>
+
+=item L<binmode|https://perldoc.perl.org/functions/binmode>
+
+=item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+
+=back
 
 =head1 LICENSE
 

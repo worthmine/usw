@@ -1,7 +1,7 @@
 package usww;
 use 5.012005;
 
-our $VERSION = "0.04";
+our $VERSION = "0.06";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -10,16 +10,16 @@ use warnings();
 use List::Util qw(first);
 
 sub import {
-    warn "it seems this is NOT Windows" unless $^O eq "MSWin32";
+    warn "it seems this is NOT a Windows\n" unless $^O eq "MSWin32";
     utf8->import;
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
     my $cp = eval { require Win32; return Win32::GetConsoleCP() }
-        or die "install 'Win32' module before use it";
+        or die "install 'Win32' module before use it\n";
     my $encoding = $@ ? 'UTF-8' : "cp$cp";
     $| = 1;    # is this irrelevant?
-    binmode \*STDIN,  ":encoding($encoding)";
+               #binmode \*STDIN,  ":encoding($encoding)";
     binmode \*STDOUT, ":encoding($encoding)";
     binmode \*STDERR, ":encoding($encoding)";
 
@@ -53,9 +53,10 @@ usww - Forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
- binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
+
+=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 
@@ -95,11 +96,19 @@ of encoding only the file path like that:
 
 =head1 SEE ALSO
 
-L<usw> 
-L<Encode>
-L<binmode|https://perldoc.perl.org/functions/binmode>
-L<%SIG|https://perldoc.perl.org/variables/%25SIG>
-L<Win32>
+=over
+
+=item L<usw> - base implement for UNIX-like OS
+
+=item L<Encode>
+
+=item L<binmode|https://perldoc.perl.org/functions/binmode>
+
+=item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+
+=item L<Win32>
+
+=back
 
 =head1 LICENSE
 

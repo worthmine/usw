@@ -1,7 +1,7 @@
-use Test::More 0.98;    # tests => 6;
+use Test::More 0.98 skip_all;    # tests => 6;
 use lib 'lib';
 
-no utf8;                # there is no need to use
+no utf8;                         # there is no need to use
 use strict;
 use warnings;
 

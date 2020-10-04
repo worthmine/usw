@@ -1,8 +1,6 @@
 package usww;
 use 5.012005;
 
-die "it seems this is NOT Windows" unless $^O eq "MSWin32";
-
 our $VERSION = "0.04";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
@@ -12,6 +10,7 @@ use warnings();
 use List::Util qw(first);
 
 sub import {
+    warn "it seems this is NOT Windows" unless $^O eq "MSWin32";
     utf8->import;
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );

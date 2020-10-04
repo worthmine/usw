@@ -18,8 +18,7 @@ sub import {
     my $cp = eval { require Win32; return Win32::GetConsoleCP() }
         or die "install 'Win32' module before use it";
     my $encoding = $@ ? 'UTF-8' : "cp$cp";
-
-    #$| = 1; # is this irrelevant?
+    $| = 1;    # is this irrelevant?
     binmode \*STDIN,  ":encoding($encoding)";
     binmode \*STDOUT, ":encoding($encoding)";
     binmode \*STDERR, ":encoding($encoding)";

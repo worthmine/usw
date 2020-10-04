@@ -27,7 +27,7 @@ exit;
 sub judgePlain {
     $Test->plan( tests => scalar @_ );
     for ( 1 .. @_ ) {
-        local $_ = shift @_;
+        local $_ = shift;
         $Test->BAIL_OUT("no length") unless length;
         $Test->is_num( is_utf8($_), !1, $_ );
     }
@@ -36,7 +36,7 @@ sub judgePlain {
 sub judgeDecoded {
     $Test->plan( tests => scalar @_ );
     for ( 1 .. @_ ) {
-        local $_ = shift @_;
+        local $_ = shift;
         $Test->BAIL_OUT("no length") unless length;
         $Test->is_num( is_utf8($_), 1, encode_utf8($_) );    #: fail $_;
     }

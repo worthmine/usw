@@ -1,7 +1,7 @@
 package usww;
 use 5.012005;
 
-our $VERSION = "0.04";
+our $VERSION = "0.06";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -19,7 +19,7 @@ sub import {
         or die "install 'Win32' module before use it";
     my $encoding = $@ ? 'UTF-8' : "cp$cp";
     $| = 1;    # is this irrelevant?
-    binmode \*STDIN,  ":encoding($encoding)";
+               #binmode \*STDIN,  ":encoding($encoding)";
     binmode \*STDOUT, ":encoding($encoding)";
     binmode \*STDERR, ":encoding($encoding)";
 
@@ -53,9 +53,10 @@ usww - Forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
- binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
+
+=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 
@@ -95,11 +96,19 @@ of encoding only the file path like that:
 
 =head1 SEE ALSO
 
-L<usw> 
-L<Encode>
-L<binmode|https://perldoc.perl.org/functions/binmode>
-L<%SIG|https://perldoc.perl.org/variables/%25SIG>
-L<Win32>
+=over
+
+=item L<usw> - another implement for like UNIX OS
+
+=item L<Encode>
+
+=item L<binmode|https://perldoc.perl.org/functions/binmode>
+
+=item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+
+=item L<Win32>
+
+=back
 
 =head1 LICENSE
 

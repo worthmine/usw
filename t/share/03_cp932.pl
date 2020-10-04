@@ -7,7 +7,6 @@ use usww;
 my $Test = Test::Builder->new();
 $Test->plan( tests => 3 );
 my $plan = 10;
-$Test->BAIL_OUT('the script is wrong');
 
 binmode \*STDIN;    # reset to default
 $Test->subtest( 'Before' => \&judgePlain, reader() );

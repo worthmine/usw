@@ -17,8 +17,8 @@ sub import {
 
     my $cp = eval { require Win32; return Win32::GetConsoleCP() }
         or die "install 'Win32' module before use it";
-    warn my $encoding = $@ ? 'UTF-8' : "cp$cp";
-    $| = 1;
+    my $encoding = $@ ? 'UTF-8' : "cp$cp";
+    $| = 0;
     binmode \*STDIN,  ":encoding($encoding)";
     binmode \*STDOUT, ":encoding($encoding)";
     binmode \*STDERR, ":encoding($encoding)";
@@ -44,7 +44,7 @@ __END__
 
 =head1 NAME
 
-usww - use usw; Especially for Windows.
+usww - Forked from usw especially for Windows.
 
 =head1 SYNOPSIS
 

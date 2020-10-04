@@ -9,9 +9,9 @@ usw - use utf8; use strict; use warnings; in one line.
     use utf8;
     use strict;
     use warnings;
-    binmode \*STDOUT, ':encoding(UTF-8)';
-    binmode \*STDERR, ':encoding(UTF-8)';
-     
+    binmode STDIN,  ':encoding(UTF-8)';
+    binmode STDOUT, ':encoding(UTF-8)';
+    binmode STDERR, ':encoding(UTF-8)';
 
 # DESCRIPTION
 
@@ -55,13 +55,17 @@ of encoding only the file path like that:
 
 This import is **only** if written.
 
-Since version 0.04, you can write like this:
+The feature added on version 0.04 has been removed in 0.05.
 
-    use usw qw(cp932);
+use [usww](https://metacpan.org/pod/usww) instead of it running this on Windows.
 
-This option changes at once `STDIN`,`STDOUT`,`STDERR` to `cp\d+`
+# SEE ALSO
 
-defaults to `UTF-8` and should **NOT** be set except on Windows.
+[usww](https://metacpan.org/pod/usww) - another implement for Windows
+
+[Encode](https://metacpan.org/pod/Encode)
+[binmode](https://perldoc.perl.org/functions/binmode)
+[%SIG](https://perldoc.perl.org/variables/%25SIG)
 
 # LICENSE
 

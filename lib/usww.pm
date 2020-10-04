@@ -1,4 +1,4 @@
-package usw;
+package usww;
 use 5.012005;
 
 our $VERSION = "0.04";
@@ -10,19 +10,21 @@ use warnings();
 use List::Util qw(first);
 
 sub import {
+    warn "it seems this is NOT Windows" unless $^O eq "MSWin32";
     utf8->import;
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
-    binmode \*STDIN,  ":encoding(UTF-8)";
-    binmode \*STDOUT, ":encoding(UTF-8)";
-    binmode \*STDERR, ":encoding(UTF-8)";
-    return unless @_;
+    my $cp = eval { require Win32; return Win32::GetConsoleCP() }
+        or die "install 'Win32' module before use it";
+    my $encoding = $@ ? 'UTF-8' : "cp$cp";
+    $| = 1;    # is this irrelevant?
+    binmode \*STDIN,  ":encoding($encoding)";
+    binmode \*STDOUT, ":encoding($encoding)";
+    binmode \*STDERR, ":encoding($encoding)";
 
-    $SIG{__WARN__} = \&_redecode if first { $_ eq 'warn' } @_;
-    $SIG{__DIE__}  = sub { die _redecode(@_) }
-        if first { $_ eq 'die' } @_;
-
+    $SIG{__WARN__} = \&_redecode;
+    $SIG{__DIE__}  = sub { die _redecode(@_) };
     return;
 }
 
@@ -42,33 +44,34 @@ __END__
 
 =head1 NAME
 
-usw - use utf8; use strict; use warnings; in one line.
+usww - Forked from usw especially for Windows.
 
 =head1 SYNOPSIS
 
- use usw; # is just 8 bytes pragma instead of below:
+ use usww; # is just 9 bytes pragma instead of below:
  use utf8;
  use strict;
  use warnings;
- binmode STDIN,  ':encoding(UTF-8)';
- binmode STDOUT, ':encoding(UTF-8)';
- binmode STDERR, ':encoding(UTF-8)';
-
+ my $cp = '__YourCP__' || 'UTF-8';
+ binmode \*STDIN,  ':encoding($cp)';
+ binmode \*STDOUT, ':encoding($cp)';
+ binmode \*STDERR, ':encoding($cp)';
+  
 =head1 DESCRIPTION
 
-usw is a shortcut pragma mostly for one-liners.
+usww is C<usw> for Windows.
 
-May be useful for those who write the above code every single time
+May be useful for those who write the above code every single time with Windows.
 
 =head2 HOW TO USE
 
- use usw;
+ use usww;
 
 It seems a kind of pragmas but doesn't spent
 L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
 because overusing it is nonsense.
 
-C<use usw;> should be just the very shortcut at beginning of your codes
+C<use usww;> should be just the very shortcut at beginning of your codes
 
 Therefore, if you want to set C<no>, you should do it the same way as before.
 
@@ -80,33 +83,23 @@ These still work as expected everywhere.
 
 And writing like this doesn't work
 
- no usw;
+ no usww;
 
-=head2 OPTIONS
+=head2 Automatically repairs bugs around file path which is encoded
 
-Since version 0.03, you can write like this:
-
- use usw qw(warn die);
-
-These options replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
+It replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
 to avoid the bug(This may be a strange specification)
 of encoding only the file path like that:
 
  宣言あり at t/script/00_è­¦åãã.pl line 19.
 
-This import is B<only> if written.
-
-The feature added on version 0.04 has been removed in 0.05.
-
-use L<usww> instead of it running this on Windows.
-
 =head1 SEE ALSO
 
-L<usww> - another implement for Windows
-
+L<usw> 
 L<Encode>
 L<binmode|https://perldoc.perl.org/functions/binmode>
 L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+L<Win32>
 
 =head1 LICENSE
 

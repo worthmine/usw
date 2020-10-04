@@ -27,6 +27,7 @@ require usww;        # turn it on
 usww->import;
 no utf8;
 binmode \*STDERR;    # set to default for debugging
+local $SIG{__WARN__} = \&alt_warn;
 
 eval { say STDOUT $decoded } and pass("when usww was called");
 
@@ -42,7 +43,7 @@ done_testing;
 
 sub alt_warn {
     $_[0] =~ /^Wide character in (?:print|say) .* line (\d+)\.$/;
-    if ( $1 and $1 == 31 ) {
+    if ( $1 and $1 == 32 ) {
         fail "it's not a expected warn";
     } else {
         pass "succeeded to catch an error: $_[0]";

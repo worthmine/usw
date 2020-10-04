@@ -5,7 +5,6 @@ use lib 'lib';
 use usw;
 
 my $code = qx"cat t/share/00_utf8.txt | $^X t/share/02_utf8.pl >/dev/null 2>&1";
-ok defined $code, "succeeded to parse STDIN in utf8"
-    or say STDERR $code;
+is $?, 0, "succeeded to parse STDIN in utf8";
 
 done_testing;

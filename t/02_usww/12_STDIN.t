@@ -7,7 +7,7 @@ use usw;
 SKIP: {
     skip 'It is tests for just only Windows', 1 if $^O ne 'MSWin32';
     my $code = qx"cat t/share/01_cp932.txt | $^X t/share/03_cp932.pl >/dev/null 2>&1";
-    ok defined $code, "succeeded to parse STDIN in utf8";
+    is $?, 0, "succeeded to parse STDIN in cp932";
 }
 
 done_testing;

@@ -8,19 +8,22 @@ use usw;
 
 my $Test = Test::Builder->new();
 $Test->plan( tests => 3 );
-
 my $plan = 10;
 
-binmode \*STDIN;    # set to default
+open my $fh, '>>', '/tmp/done.txt' or die $!;
+
+binmode \*STDIN;    # reset to default
 $Test->subtest( 'Before' => \&judgePlain, reader() );
 
 binmode \*STDIN, ":encoding(UTF-8)";    # set to decode auto
 $Test->subtest( 'Decoded' => \&judgeDecoded, reader() );
 
-binmode \*STDIN;                        # set to default again
+binmode \*STDIN;                        # reset to default again
 $Test->subtest( 'After' => \&judgePlain, reader() );
 
 $Test->done_testing();
+
+say STDERR $Test->current_test();
 
 exit;
 

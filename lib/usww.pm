@@ -10,13 +10,13 @@ use warnings();
 use List::Util qw(first);
 
 sub import {
-    warn "it seems this is NOT Windows" unless $^O eq "MSWin32";
+    warn "it seems this is NOT a Windows\n" unless $^O eq "MSWin32";
     utf8->import;
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
     my $cp = eval { require Win32; return Win32::GetConsoleCP() }
-        or die "install 'Win32' module before use it";
+        or die "install 'Win32' module before use it\n";
     my $encoding = $@ ? 'UTF-8' : "cp$cp";
     $| = 1;    # is this irrelevant?
                #binmode \*STDIN,  ":encoding($encoding)";
@@ -98,7 +98,7 @@ of encoding only the file path like that:
 
 =over
 
-=item L<usw> - another implement for like UNIX OS
+=item L<usw> - base implement for UNIX-like OS
 
 =item L<Encode>
 

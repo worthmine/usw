@@ -25,6 +25,7 @@ note encode_utf8 $@ if $@;
 require usww;        # turn it on
 usww->import;
 no utf8;
+binmode \*STDERR;    # set to default for debugging
 
 eval { say STDOUT $decoded } and pass("when usww was called");
 note encode_utf8 $@ if $@;

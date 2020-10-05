@@ -60,7 +60,7 @@ usw - use utf8; use strict; use warnings; in one line.
 
 usw is a shortcut pragma mostly for one-liners.
 
-May be useful for those who write the above code every single time
+May be useful for those who write the above code every single time.
 
 =head2 HOW TO USE
 
@@ -80,13 +80,14 @@ Therefore, if you want to set C<no>, you should do it the same way as before.
 
 These still work as expected everywhere.
 
-And writing like this doesn't work
+And writing like this doesn't work.
 
  no usw;
 
 =head2 features
 
-Since version 0.07, you can automatically relate STDIN with UTF-8;
+Since version 0.07,
+you can automatically relate C<STDIN> with C<UTF-8>.
 
 If you wanna change it to C<cp\d+> because using Windows,
 use L<usww> instead of it.

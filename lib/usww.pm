@@ -71,7 +71,7 @@ It seems a kind of pragmas but doesn't spent
 L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
 because overusing it is nonsense.
 
-C<use usww;> should be just the very shortcut at beginning of your codes
+C<use usww;> should be just the very shortcut at beginning of your codes.
 
 Therefore, if you want to set C<no>, you should do it the same way as before.
 
@@ -81,7 +81,7 @@ Therefore, if you want to set C<no>, you should do it the same way as before.
 
 These still work as expected everywhere.
 
-And writing like this doesn't work
+And writing like this doesn't work.
 
  no usww;
 
@@ -97,7 +97,7 @@ of encoding only the file path like that:
 
 Since version 0.07, you can relate automatically
 C<STDIN>,C<STDOUT>,C<STDERR> with C<cp\d+>
-which is detected by L<Win32> module;
+which is detected by L<Win32> module.
 
 =head1 SEE ALSO
 

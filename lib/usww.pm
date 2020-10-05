@@ -1,7 +1,7 @@
 package usww;
 use 5.012005;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -19,7 +19,7 @@ sub import {
         or die "install 'Win32' module before use it\n";
     my $encoding = $@ ? 'UTF-8' : "cp$cp";
     $| = 1;    # is this irrelevant?
-               #binmode \*STDIN,  ":encoding($encoding)";
+    binmode \*STDIN,  ":encoding($encoding)";
     binmode \*STDOUT, ":encoding($encoding)";
     binmode \*STDERR, ":encoding($encoding)";
 
@@ -53,10 +53,9 @@ usww - Forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
+ binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
-
-=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 
@@ -72,7 +71,7 @@ It seems a kind of pragmas but doesn't spent
 L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
 because overusing it is nonsense.
 
-C<use usww;> should be just the very shortcut at beginning of your codes
+C<use usww;> should be just the very shortcut at beginning of your codes.
 
 Therefore, if you want to set C<no>, you should do it the same way as before.
 
@@ -82,7 +81,7 @@ Therefore, if you want to set C<no>, you should do it the same way as before.
 
 These still work as expected everywhere.
 
-And writing like this doesn't work
+And writing like this doesn't work.
 
  no usww;
 
@@ -93,6 +92,12 @@ to avoid the bug(This may be a strange specification)
 of encoding only the file path like that:
 
  宣言あり at t/script/00_è­¦åãã.pl line 19.
+
+=head2 features
+
+Since version 0.07, you can relate automatically
+C<STDIN>,C<STDOUT>,C<STDERR> with C<cp\d+>
+which is detected by L<Win32> module.
 
 =head1 SEE ALSO
 

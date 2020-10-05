@@ -11,10 +11,10 @@ my $plan = 10;
 binmode \*STDIN;    # reset to default
 $Test->subtest( 'Before' => \&judgePlain, reader() );
 
-binmode \*STDIN, ":encoding(UTF-8)";    # set to decode auto
+usw->import();      # run this again to set STDIN as ":encoding(UTF-8)";
 $Test->subtest( 'Decoded' => \&judgeDecoded, reader() );
 
-binmode \*STDIN;                        # reset to default again
+binmode \*STDIN;    # reset to default again
 $Test->subtest( 'After' => \&judgePlain, reader() );
 
 $Test->done_testing();

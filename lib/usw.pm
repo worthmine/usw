@@ -14,16 +14,18 @@ sub import {
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
-    $| = 1;    # is this irrelevant?
-    binmode \*STDIN,  ":encoding(UTF-8)";
-    binmode \*STDOUT, ":encoding(UTF-8)";
-    binmode \*STDERR, ":encoding(UTF-8)";
-    return unless @_;
+    my $encoding = $^O ne "MSWin32"    # is UNIX-like OS
+        ? 'UTF-8'
+        : eval { require Win32; return "cp" . Win32::GetConsoleCP() };    # is Windows
+    die "install 'Win32' module before use it\n" if $@;
 
-    $SIG{__WARN__} = \&_redecode if first { $_ eq 'warn' } @_;
-    $SIG{__DIE__}  = sub { die _redecode(@_) }
-        if first { $_ eq 'die' } @_;
+    $| = 1;                                                               # is this irrelevant?
+    binmode \*STDIN,  ":encoding($encoding)";
+    binmode \*STDOUT, ":encoding($encoding)";
+    binmode \*STDERR, ":encoding($encoding)";
 
+    $SIG{__WARN__} = \&_redecode;
+    $SIG{__DIE__}  = sub { die _redecode(@_) };
     return;
 }
 
@@ -51,14 +53,14 @@ usw - use utf8; use strict; use warnings; in one line.
  use utf8;
  use strict;
  use warnings;
- binmode STDIN,  ':encoding(UTF-8)';
- binmode STDOUT, ':encoding(UTF-8)';
- binmode STDERR, ':encoding(UTF-8)';
-
-
+ my $cp = '__YourCP__' || 'UTF-8';
+ binmode \*STDIN,  ':encoding($cp)';
+ binmode \*STDOUT, ':encoding($cp)';
+ binmode \*STDERR, ':encoding($cp)';
+  
 =head1 DESCRIPTION
 
-usw is a shortcut pragma mostly for one-liners.
+usw is like a shortcut pragma that works in any environment.
 
 May be useful for those who write the above code every single time.
 
@@ -70,7 +72,7 @@ It seems a kind of pragmas but doesn't spent
 L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
 because overusing it is nonsense.
 
-C<use usw;> should be just the very shortcut at beginning of your codes
+C<use usw;> should be just the very shortcut at beginning of your codes.
 
 Therefore, if you want to set C<no>, you should do it the same way as before.
 
@@ -84,39 +86,33 @@ And writing like this doesn't work.
 
  no usw;
 
-=head2 features
+=head2 Automatically repairs bugs around file path which is encoded
 
-Since version 0.07,
-you can automatically relate C<STDIN> with C<UTF-8>.
-
-If you wanna change it to C<cp\d+> because using Windows,
-use L<usww> instead of it.
-
-=head2 OPTIONS
-
-Since version 0.03, you can write like this:
-
- use usw qw(warn die);
-
-These options replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
+It replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
 to avoid the bug(This may be a strange specification)
 of encoding only the file path like that:
 
  宣言あり at t/script/00_è­¦åãã.pl line 19.
 
-This import is B<only> if written.
+=head2 features
+
+Since version 0.07, you can relate automatically
+C<STDIN>,C<STDOUT>,C<STDERR> with C<cp\d+>
+which is detected by L<Win32> module.
+
+Since version 0.08, you don't have to care if the environment is a Windows or not.
 
 =head1 SEE ALSO
 
 =over
-
-=item L<usww> - another implement for Windows
 
 =item L<Encode>
 
 =item L<binmode|https://perldoc.perl.org/functions/binmode>
 
 =item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
+
+=item L<Win32>
 
 =back
 

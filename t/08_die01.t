@@ -24,7 +24,6 @@ eval { die $plain } or pass("$plain is a plain");
 
 {
     use usw;    # turn it on
-    use utf8;
     my $decoded = '宣言あり';
     eval { die $decoded } or pass("pass to die with decoded strings");
 }

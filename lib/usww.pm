@@ -59,7 +59,7 @@ usww - Forked from usw especially for Windows.
   
 =head1 DESCRIPTION
 
-usww is C<usw> for Windows.
+usww is L<usw> for Windows.
 
 May be useful for those who write the above code every single time with Windows.
 

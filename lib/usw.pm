@@ -1,7 +1,7 @@
 package usw;
 use 5.012005;
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -14,6 +14,7 @@ sub import {
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
+    $| = 1;    # is this irrelevant?
     binmode \*STDIN,  ":encoding(UTF-8)";
     binmode \*STDOUT, ":encoding(UTF-8)";
     binmode \*STDERR, ":encoding(UTF-8)";
@@ -53,13 +54,12 @@ usw - use utf8; use strict; use warnings; in one line.
  binmode STDOUT, ':encoding(UTF-8)';
  binmode STDERR, ':encoding(UTF-8)';
 
-=cut #binmode STDIN,  ':encoding(UTF-8)';
 
 =head1 DESCRIPTION
 
 usw is a shortcut pragma mostly for one-liners.
 
-May be useful for those who write the above code every single time
+May be useful for those who write the above code every single time.
 
 =head2 HOW TO USE
 
@@ -79,9 +79,17 @@ Therefore, if you want to set C<no>, you should do it the same way as before.
 
 These still work as expected everywhere.
 
-And writing like this doesn't work
+And writing like this doesn't work.
 
  no usw;
+
+=head2 features
+
+Since version 0.07,
+you can automatically relate C<STDIN> with C<UTF-8>.
+
+If you wanna change it to C<cp\d+> because using Windows,
+use L<usww> instead of it.
 
 =head2 OPTIONS
 
@@ -96,10 +104,6 @@ of encoding only the file path like that:
  宣言あり at t/script/00_è­¦åãã.pl line 19.
 
 This import is B<only> if written.
-
-The feature added on version 0.04 has been removed in 0.05.
-
-use L<usww> instead of it running this on Windows.
 
 =head1 SEE ALSO
 

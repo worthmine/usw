@@ -14,6 +14,7 @@ sub import {
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
+    $| = 1;    # is this irrelevant?
     binmode \*STDIN,  ":encoding(UTF-8)";
     binmode \*STDOUT, ":encoding(UTF-8)";
     binmode \*STDERR, ":encoding(UTF-8)";
@@ -50,10 +51,10 @@ usw - use utf8; use strict; use warnings; in one line.
  use utf8;
  use strict;
  use warnings;
+ binmode STDIN,  ':encoding(UTF-8)';
  binmode STDOUT, ':encoding(UTF-8)';
  binmode STDERR, ':encoding(UTF-8)';
 
-=cut #binmode STDIN,  ':encoding(UTF-8)';
 
 =head1 DESCRIPTION
 
@@ -83,6 +84,13 @@ And writing like this doesn't work
 
  no usw;
 
+=head2 features
+
+Since version 0.07, you can automatically relate STDIN with UTF-8;
+
+If you wanna change it to C<cp\d+> because using Windows,
+use L<usww> instead of it.
+
 =head2 OPTIONS
 
 Since version 0.03, you can write like this:
@@ -96,10 +104,6 @@ of encoding only the file path like that:
  宣言あり at t/script/00_è­¦åãã.pl line 19.
 
 This import is B<only> if written.
-
-The feature added on version 0.04 has been removed in 0.05.
-
-use L<usww> instead of it running this on Windows.
 
 =head1 SEE ALSO
 

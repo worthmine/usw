@@ -53,10 +53,9 @@ usww - Forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
+ binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
-
-=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 
@@ -93,6 +92,12 @@ to avoid the bug(This may be a strange specification)
 of encoding only the file path like that:
 
  宣言あり at t/script/00_è­¦åãã.pl line 19.
+
+=head2 features
+
+Since version 0.07, you can relate automatically
+C<STDIN>,C<STDOUT>,C<STDERR> with C<cp\d+>
+which is detected by L<Win32> module;
 
 =head1 SEE ALSO
 

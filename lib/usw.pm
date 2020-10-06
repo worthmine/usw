@@ -2,7 +2,6 @@ package usw;
 use 5.012005;
 
 our $VERSION = "0.09";
-our $Encoding;
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8;
@@ -10,20 +9,22 @@ use strict;
 use warnings;
 use List::Util qw(first);
 
+my $enc;
+sub _get_encoding {$enc}
+
 sub import {
     utf8->import;
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
-    $Encoding = $^O ne "MSWin32"    # is UNIX-like OS
-        ? 'UTF-8'
-        : eval { require Win32; return "cp" . Win32::GetConsoleCP() };    # is Windows
-    die "install 'Win32' module before use it\n" if $@;
+    require encoding;
+    my $cp = encoding::_get_locale_encoding();
+    $enc = $cp =~ /^utf-8/ ? 'UTF-8' : $cp;
 
-    $| = 1;                                                               # is this irrelevant?
-    binmode \*STDIN,  ":encoding($Encoding)";
-    binmode \*STDOUT, ":encoding($Encoding)";
-    binmode \*STDERR, ":encoding($Encoding)";
+    $| = 1;    # is this irrelevant?
+    binmode \*STDIN,  ":encoding($enc)";
+    binmode \*STDOUT, ":encoding($enc)";
+    binmode \*STDERR, ":encoding($enc)";
 
     $SIG{__WARN__} = \&_redecode;
     $SIG{__DIE__}  = sub { die _redecode(@_) };
@@ -34,7 +35,7 @@ sub _redecode {
     $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
     my @texts = split $2, $_[0];
     return is_utf8($1)
-        ? $texts[0] . decode_utf8 $2. $texts[1]
+        ? $texts[0] || '' . decode_utf8($2) . $texts[1] || ''
         : decode_utf8 $_[0];
 }
 

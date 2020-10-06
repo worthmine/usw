@@ -3,7 +3,6 @@ branches:
   only:
     - master
     - dev
-    - combined
 init:
   - git config --global core.autocrlf input
 

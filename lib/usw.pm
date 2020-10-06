@@ -5,9 +5,9 @@ our $VERSION = "0.09";
 our $Encoding;
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
-use utf8();
-use strict();
-use warnings();
+use utf8;
+use strict;
+use warnings;
 use List::Util qw(first);
 
 sub import {

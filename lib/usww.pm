@@ -22,16 +22,15 @@ usww - was forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
+ binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
-
-=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 
 usww is deprecated because L<usw> now adapt Windows.
 
-This document exists just only for backwards compatibility
+This document exists just only for backwards compatibility.
 
 =head1 LICENSE
 

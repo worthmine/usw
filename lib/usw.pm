@@ -1,7 +1,7 @@
 package usw;
 use 5.012005;
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 our $Encoding;
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);

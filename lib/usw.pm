@@ -1,7 +1,8 @@
 package usw;
 use 5.012005;
 
-our $VERSION = "0.07";
+our $VERSION = "0.08";
+our $Encoding;
 
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8();
@@ -14,15 +15,15 @@ sub import {
     strict->import;
     warnings->import( 'all', FATAL => 'recursion' );
 
-    my $encoding = $^O ne "MSWin32"    # is UNIX-like OS
+    $Encoding = $^O ne "MSWin32"    # is UNIX-like OS
         ? 'UTF-8'
         : eval { require Win32; return "cp" . Win32::GetConsoleCP() };    # is Windows
     die "install 'Win32' module before use it\n" if $@;
 
     $| = 1;                                                               # is this irrelevant?
-    binmode \*STDIN,  ":encoding($encoding)";
-    binmode \*STDOUT, ":encoding($encoding)";
-    binmode \*STDERR, ":encoding($encoding)";
+    binmode \*STDIN,  ":encoding($Encoding)";
+    binmode \*STDOUT, ":encoding($Encoding)";
+    binmode \*STDERR, ":encoding($Encoding)";
 
     $SIG{__WARN__} = \&_redecode;
     $SIG{__DIE__}  = sub { die _redecode(@_) };

@@ -64,7 +64,7 @@
          "web" : "https://github.com/worthmine/usw"
       }
    },
-   "version" : "0.07",
+   "version" : "0.08",
    "x_authority" : "cpan:WORTHMINE",
    "x_contributors" : [
       "worthmine <worthmine@gmail.com>"

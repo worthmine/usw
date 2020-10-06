@@ -1,40 +1,9 @@
 package usww;
 use 5.012005;
 
-our $VERSION = "0.07";
+our $VERSION = "0.08";
 
-use Encode qw(is_utf8 encode_utf8 decode_utf8);
-use utf8();
-use strict();
-use warnings();
-use List::Util qw(first);
-
-sub import {
-    warn "it seems this is NOT a Windows\n" unless $^O eq "MSWin32";
-    utf8->import;
-    strict->import;
-    warnings->import( 'all', FATAL => 'recursion' );
-
-    my $cp = eval { require Win32; return Win32::GetConsoleCP() }
-        or die "install 'Win32' module before use it\n";
-    my $encoding = $@ ? 'UTF-8' : "cp$cp";
-    $| = 1;    # is this irrelevant?
-    binmode \*STDIN,  ":encoding($encoding)";
-    binmode \*STDOUT, ":encoding($encoding)";
-    binmode \*STDERR, ":encoding($encoding)";
-
-    $SIG{__WARN__} = \&_redecode;
-    $SIG{__DIE__}  = sub { die _redecode(@_) };
-    return;
-}
-
-sub _redecode {
-    $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
-    my @texts = split $2, $_[0];
-    return is_utf8($1)
-        ? $texts[0] . decode_utf8 $2. $texts[1]
-        : decode_utf8 $_[0];
-}
+use parent 'usw';
 
 1;
 
@@ -44,7 +13,7 @@ __END__
 
 =head1 NAME
 
-usww - Forked from usw especially for Windows.
+usww - was forked from usw especially for Windows.
 
 =head1 SYNOPSIS
 
@@ -59,61 +28,9 @@ usww - Forked from usw especially for Windows.
   
 =head1 DESCRIPTION
 
-usww is L<usw> for Windows.
+usww is deprecated because L<usw> now adapt Windows.
 
-May be useful for those who write the above code every single time with Windows.
-
-=head2 HOW TO USE
-
- use usww;
-
-It seems a kind of pragmas but doesn't spent
-L<%^H|https://metacpan.org/pod/perlpragma#Key-naming>
-because overusing it is nonsense.
-
-C<use usww;> should be just the very shortcut at beginning of your codes.
-
-Therefore, if you want to set C<no>, you should do it the same way as before.
-
- no strict;
- no warnings;
- no utf8;
-
-These still work as expected everywhere.
-
-And writing like this doesn't work.
-
- no usww;
-
-=head2 Automatically repairs bugs around file path which is encoded
-
-It replaces C<$SIG{__WARN__}> or/and C<$SIG{__DIE__}>
-to avoid the bug(This may be a strange specification)
-of encoding only the file path like that:
-
- 宣言あり at t/script/00_è­¦åãã.pl line 19.
-
-=head2 features
-
-Since version 0.07, you can relate automatically
-C<STDIN>,C<STDOUT>,C<STDERR> with C<cp\d+>
-which is detected by L<Win32> module.
-
-=head1 SEE ALSO
-
-=over
-
-=item L<usw> - base implement for UNIX-like OS
-
-=item L<Encode>
-
-=item L<binmode|https://perldoc.perl.org/functions/binmode>
-
-=item L<%SIG|https://perldoc.perl.org/variables/%25SIG>
-
-=item L<Win32>
-
-=back
+This document exists just only for backwards compatibility
 
 =head1 LICENSE
 

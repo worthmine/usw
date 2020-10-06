@@ -15,8 +15,8 @@ $code = qx"cat t/12_STDIN/01_utf8.txt | $^X t/12_STDIN/00_detect_auto.pl";
 BAIL_OUT $! if $!;
 is $?, 0, "succeeded to parse STDIN in utf8";
 
-my $enc = $usw::Encoding;
 SKIP: {
+    my $enc = usw->_get_encoding();
     skip 'this test is for the environment other than UTF-8', 1 if $enc eq 'UTF-8';
     open my $in,  '<:utf8',           't/12_STDIN/01_utf8.txt'      or fail "open failed: $!";
     open my $out, ">:encoding($enc)", 't/12_STDIN/05_generated.txt' or fail "open failed: $!";

@@ -33,9 +33,9 @@ sub import {
 
 sub _redecode {
     $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
-    return unless my @texts = split $2, $_[0];
+    my @texts = split $2, $_[0];
     return is_utf8($1)
-        ? $texts[0] . decode_utf8($2) . $texts[1]
+        ? $texts[0] || '' . decode_utf8($2) . $texts[1] || ''
         : decode_utf8 $_[0];
 }
 

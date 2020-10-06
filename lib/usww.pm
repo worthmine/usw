@@ -1,7 +1,7 @@
 package usww;
 use 5.012005;
 
-our $VERSION = "0.08";
+our $VERSION = "0.09";
 
 use parent 'usw';
 
@@ -22,9 +22,10 @@ usww - was forked from usw especially for Windows.
  use strict;
  use warnings;
  my $cp = '__YourCP__' || 'UTF-8';
- binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
  binmode \*STDERR, ':encoding($cp)';
+
+=cut #binmode \*STDIN,  ':encoding($cp)';
   
 =head1 DESCRIPTION
 

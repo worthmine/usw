@@ -2,6 +2,9 @@ Revision history for Perl extension usw
 
 {{$NEXT}}
 
+0.09 2020-10-06T06:43:39Z
+    fixed incorrect tests run on Windows other than with cp932.
+
 0.08 2020-10-05T11:13:26Z
     - now we can use usw; in Windows
     - therefore, usww is deprecated

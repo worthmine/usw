@@ -27,8 +27,8 @@ while (<$in>) {    # copying encoded lines from which was utf8;
 fail "lines are too less" if $count < 30;
 
 $code = qx"cat t/12_STDIN/05_generated.txt | $^X t/12_STDIN/00_detect_auto.pl";
-unlink 't/12_STDIN/05_generated.txt';
 BAIL_OUT $!, if $!;
+unlink 't/12_STDIN/05_generated.txt';
 is $?, 0, "succeeded to parse STDIN in $enc";
 
 done_testing;

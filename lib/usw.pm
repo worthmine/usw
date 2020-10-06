@@ -21,13 +21,6 @@ sub import {
     my $cp = encoding::_get_locale_encoding();
     $enc = $cp =~ /^utf-8/ ? 'UTF-8' : $cp;
 
-    # encoding pragma has already done what I meant https://metacpan.org/source/encoding#L31
-    #$enc = $^O ne "MSWin32"    # is UNIX-like OS
-    #    ? 'UTF-8'
-    #    : eval { require Win32; return "cp" . Win32::GetConsoleCP() };    # is Windows
-    #die "install 'Win32' module before use it\n" if $@;
-    # so comment outed
-
     $| = 1;    # is this irrelevant?
     binmode \*STDIN,  ":encoding($enc)";
     binmode \*STDOUT, ":encoding($enc)";
@@ -35,15 +28,14 @@ sub import {
 
     $SIG{__WARN__} = \&_redecode;
     $SIG{__DIE__}  = sub { die _redecode(@_) };
-
     return;
 }
 
 sub _redecode {
     $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
-    my @texts = split $2, $_[0];
+    my @texts = split( $2, $_[0] ) or return;
     return is_utf8($1)
-        ? $texts[0] . decode_utf8 $2. $texts[1]
+        ? $texts[0] . decode_utf8($2) . $texts[1]
         : decode_utf8 $_[0];
 }
 

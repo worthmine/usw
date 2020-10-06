@@ -15,28 +15,20 @@ $code = qx"cat t/12_STDIN/01_utf8.txt | $^X t/12_STDIN/00_detect_auto.pl";
 BAIL_OUT $! if $!;
 is $?, 0, "succeeded to parse STDIN in utf8";
 
-#SKIP: {
-my $encoding = $usw::Encoding;
+my $enc = $usw::Encoding;
+open my $in,  '<:utf8',           't/12_STDIN/01_utf8.txt'      or fail "open failed: $!";
+open my $out, ">:encoding($enc)", 't/12_STDIN/05_generated.txt' or fail "open failed: $!";
+my $count = 0;
+while (<$in>) {    # copying encoded lines from which was utf8;
+    chomp;
+    say $out $_;
+    $count++;
+}
+fail "lines are too less" if $count < 30;
 
-#skip 'this is a test for just only Windows', 1 if $^O ne 'MSWin32';
-genTestFile($encoding);    # write encoded lines to 05_generated.txt;
 $code = qx"cat t/12_STDIN/05_generated.txt | $^X t/12_STDIN/00_detect_auto.pl";
+unlink 't/12_STDIN/05_generated.txt';
 BAIL_OUT $!, if $!;
-is $?, 0, "succeeded to parse STDIN in $encoding";
-
-#}
+is $?, 0, "succeeded to parse STDIN in $enc";
 
 done_testing;
-
-sub genTestFile {
-    my $encoding = shift;
-    open my $in,  '<:utf8',                't/12_STDIN/01_utf8.txt'      or fail "open failed: $!";
-    open my $out, ">:encoding($encoding)", 't/12_STDIN/05_generated.txt' or fail "open failed: $!";
-    my $count = 0;
-    while (<$in>) {
-        chomp;
-        say $out $_;
-        $count++;
-    }
-    fail "lines are too less" if $count < 30;
-}

@@ -15,14 +15,16 @@ $code = qx"cat t/12_STDIN/01_utf8.txt | $^X t/12_STDIN/00_detect_auto.pl";
 BAIL_OUT $! if $!;
 is $?, 0, "succeeded to parse STDIN in utf8";
 
-SKIP: {
-    my $encoding = $usw::Encoding;
-    skip 'this is a test for just only Windows', 1 if $^O ne 'MSWin32';
-    genTestFile($encoding);    # write encoded lines to 05_generated.txt;
-    $code = qx"cat t/12_STDIN/05_generated.txt | $^X t/12_STDIN/00_detect_auto.pl";
-    BAIL_OUT $!, if $!;
-    is $?, 0, "succeeded to parse STDIN in $encoding";
-}
+#SKIP: {
+my $encoding = $usw::Encoding;
+
+#skip 'this is a test for just only Windows', 1 if $^O ne 'MSWin32';
+genTestFile($encoding);    # write encoded lines to 05_generated.txt;
+$code = qx"cat t/12_STDIN/05_generated.txt | $^X t/12_STDIN/00_detect_auto.pl";
+BAIL_OUT $!, if $!;
+is $?, 0, "succeeded to parse STDIN in $encoding";
+
+#}
 
 done_testing;
 

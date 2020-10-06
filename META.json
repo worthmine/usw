@@ -47,7 +47,6 @@
       },
       "test" : {
          "requires" : {
-            "Data::Dumper::AutoEncode" : "1.00",
             "Test::More" : "1.302181"
          }
       }
@@ -64,7 +63,7 @@
          "web" : "https://github.com/worthmine/usw"
       }
    },
-   "version" : "0.08",
+   "version" : "0.09",
    "x_authority" : "cpan:WORTHMINE",
    "x_contributors" : [
       "worthmine <worthmine@gmail.com>"

@@ -1,11 +1,9 @@
 package usw;
 use 5.012005;
-
-our $VERSION = "0.09";
-
 use parent qw(utf8 strict warnings);
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 
+our $VERSION = "0.09";
 my $enc;
 sub _get_encoding {$enc}
 
@@ -16,9 +14,9 @@ sub import {
     $enc = $cp =~ /^utf-8/ ? 'UTF-8' : $cp;
 
     $| = 1;                                       # is this irrelevant?
-    binmode \*STDIN,  ":encoding($enc)";
-    binmode \*STDOUT, ":encoding($enc)";
-    binmode \*STDERR, ":encoding($enc)";
+    binmode \*STDIN  => ":encoding($enc)";
+    binmode \*STDOUT => ":encoding($enc)";
+    binmode \*STDERR => ":encoding($enc)";
 
     $SIG{__WARN__} = \&_redecode;
     $SIG{__DIE__}  = sub { die _redecode(@_) };

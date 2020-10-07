@@ -4,17 +4,17 @@ use feature qw(say);
 use lib 'lib';
 
 use usw;
-my $enc = usw->_get_encoding();
+
 qx'cat t/12_STDIN/03_empty.txt';
 my $com = !$! ? 'cat' : 'type';
 
-my $code = qx"$com t/12_STDIN/03_empty.txt | $^X t/12_STDIN/00_detect_auto.pl";
+qx"$com t/12_STDIN/03_empty.txt | $^X t/12_STDIN/00_detect_auto.pl";
 ok !$!, "Successfully detected empty file";
 
-$code = qx"$com t/12_STDIN/04_empty_lines.txt | $^X t/12_STDIN/00_detect_auto.pl";
+qx"$com t/12_STDIN/04_empty_lines.txt | $^X t/12_STDIN/00_detect_auto.pl";
 ok !$!, "Successfully detected file with empty lines";
 
-$code = qx"$com t/12_STDIN/01_utf8.txt | $^X t/12_STDIN/00_detect_auto.pl";
+qx"$com t/12_STDIN/01_utf8.txt | $^X t/12_STDIN/00_detect_auto.pl";
 BAIL_OUT $! if $!;
 is $?, 0, "succeeded to parse STDIN in utf8";
 
@@ -31,7 +31,7 @@ SKIP: {
     }
     fail "lines are too less" if $count < 30;
 
-    $code = qx"$com t/12_STDIN/05_generated.txt | $^X t/12_STDIN/00_detect_auto.pl";
+    qx"$com t/12_STDIN/05_generated.txt | $^X t/12_STDIN/00_detect_auto.pl";
     BAIL_OUT $!, if $!;
     is $?, 0, "succeeded to parse STDIN in $enc";
 

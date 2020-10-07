@@ -38,4 +38,3 @@ sub alt_warn {
         die $_[0];
     }
 }
-

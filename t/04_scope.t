@@ -1,5 +1,4 @@
 use Test::More 0.98 tests => 3;
-use lib 'lib';
 
 local $SIG{__WARN__} = sub {
     like $_[0], qr/^\QArgument "2:" isn't numeric in addition (+)/,

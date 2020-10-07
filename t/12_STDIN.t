@@ -1,7 +1,6 @@
 use Test::More 0.98 tests => 4;
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use feature qw(say);
-use lib 'lib';
 
 use usw;
 

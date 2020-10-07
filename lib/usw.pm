@@ -3,25 +3,19 @@ use 5.012005;
 
 our $VERSION = "0.09";
 
+use parent qw(utf8 strict warnings);
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
-use utf8;
-use strict;
-use warnings;
-use List::Util qw(first);
 
 my $enc;
 sub _get_encoding {$enc}
 
 sub import {
-    utf8->import;
-    strict->import;
-    warnings->import( 'all', FATAL => 'recursion' );
-
+    $_->import for qw( utf8 strict warnings );   # borrowed from https://metacpan.org/pod/Mojo::Base
     require encoding;
-    my $cp = encoding::_get_locale_encoding();
+    my $cp = encoding::_get_locale_encoding();    # borrowed from https://metacpan.org/pod/open
     $enc = $cp =~ /^utf-8/ ? 'UTF-8' : $cp;
 
-    $| = 1;    # is this irrelevant?
+    $| = 1;                                       # is this irrelevant?
     binmode \*STDIN,  ":encoding($enc)";
     binmode \*STDOUT, ":encoding($enc)";
     binmode \*STDERR, ":encoding($enc)";

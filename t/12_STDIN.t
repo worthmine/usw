@@ -4,8 +4,9 @@ use feature qw(say);
 
 use usw;
 
-qx'cat t/_12_STDIN/03_empty.txt';
-my $com = !$! ? 'cat' : 'type';
+my $com = 'cat';
+qx"$com t/_12_STDIN/03_empty.txt";
+$com = 'type' if $? != 0;
 
 qx"$com t/_12_STDIN/03_empty.txt | $^X t/_12_STDIN/00_detect_auto.pl";
 ok !$!, "Successfully detected empty file";

@@ -7,15 +7,12 @@ use Encode qw(is_utf8 encode_utf8 decode_utf8);
 use utf8;
 use strict;
 use warnings;
-use List::Util qw(first);
 
 my $enc;
 sub _get_encoding {$enc}
 
-sub import {
-    utf8->import;
-    strict->import;
-    warnings->import( 'all', FATAL => 'recursion' );
+sub import {   # borrowed from https://metacpan.org/release/Mojolicious/source/lib/Mojo/Base.pm#L102
+    $_->import for qw( utf8 strict warnings );
 
     require encoding;
     my $cp = encoding::_get_locale_encoding();

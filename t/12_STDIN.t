@@ -5,7 +5,8 @@ use lib 'lib';
 
 use usw;
 my $enc = usw->_get_encoding();
-my $com = $enc =~ /^cp/ ? 'type' : 'cat';
+qx'cat t/12_STDIN/03_empty.txt';
+my $com = !$! ? 'cat' : 'type';
 
 my $code = qx"$com t/12_STDIN/03_empty.txt | $^X t/12_STDIN/00_detect_auto.pl";
 ok !$!, "Successfully detected empty file";

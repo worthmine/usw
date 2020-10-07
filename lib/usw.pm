@@ -3,15 +3,13 @@ use 5.012005;
 
 our $VERSION = "0.09";
 
+use parent qw(utf8 strict warnings);
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
-use utf8;
-use strict;
-use warnings;
 
 my $enc;
 sub _get_encoding {$enc}
 
-sub import {   # borrowed from https://metacpan.org/release/Mojolicious/source/lib/Mojo/Base.pm#L102
+sub import {
     $_->import for qw( utf8 strict warnings );
 
     require encoding;

@@ -3,7 +3,7 @@ use 5.012005;
 use parent qw(utf8 strict warnings);
 use Encode qw(is_utf8 encode_utf8 decode_utf8);
 
-our $VERSION = "0.10";
+our $VERSION = "0.09";
 my $enc;
 sub _get_encoding {$enc}
 

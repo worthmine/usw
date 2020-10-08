@@ -23,6 +23,11 @@ sub import {
     return;
 }
 
+sub unimport {
+    require Carp;
+    Carp::croak "$_[0] doesn't provide `no` pragma";
+}
+
 sub _redecode {
     $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
     my @texts = split $2, $_[0];
@@ -79,6 +84,8 @@ These still work as expected everywhere.
 And writing like this doesn't work.
 
  no usw;
+
+Since version 0.12, it dies with warning.
 
 =head2 Automatically repairs bugs around file path which is encoded
 

@@ -115,6 +115,8 @@ Since version 0.08, you don't have to care if the environment is a Windows or no
 
 =item L<Win32>
 
+=item L<open>
+
 =back
 
 =head1 LICENSE

@@ -11,12 +11,15 @@ sub import {
     $_->import for qw( utf8 strict warnings );   # borrowed from https://metacpan.org/pod/Mojo::Base
     require encoding;
     my $cp = encoding::_get_locale_encoding();    # borrowed from https://metacpan.org/pod/open
-    $enc = $cp =~ /^utf-8/ ? 'UTF-8' : $cp;
+    $enc = $cp =~ /^utf-?8/i ? 'UTF-8' : $cp;
+    $enc ||= ( split /\./, $ENV{LANG} )[-1];      # Cannot find encoding in some environment
 
-    $| = 1;                                       # is this irrelevant?
-    binmode \*STDIN  => ":encoding($enc)";
-    binmode \*STDOUT => ":encoding($enc)";
-    binmode \*STDERR => ":encoding($enc)";
+    if ($enc) {
+        $| = 1;
+        binmode \*STDIN  => ":encoding($enc)";
+        binmode \*STDOUT => ":encoding($enc)";
+        binmode \*STDERR => ":encoding($enc)";
+    }
 
     $SIG{__WARN__} = \&_redecode;
     $SIG{__DIE__}  = sub { die _redecode(@_) };

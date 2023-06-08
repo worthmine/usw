@@ -20,11 +20,11 @@ no utf8;
 local $SIG{__WARN__} = \&alt_warn;
 
 eval { say STDERR $string } and pass "when usw was called";
-note encode_utf8 $@ if $@;
+note $@ if $@;
 
 binmode \*STDERR;    # set to default again
 
-eval { say STDERR $string } or pass "dies when no binmode";
+eval { say STDERR $string } or pass "dies when no binmode again";
 note $@ if $@;
 
 done_testing;

@@ -22,7 +22,7 @@ sub import {
 
     # require encoding;
     # my $cp = encoding::_get_locale_encoding();    # borrowed from https://metacpan.org/pod/open
-    # $enc = $cp =~ /^utf-?8/i ? 'UTF-8' : $cp;
+    # $enc = $cp =~ /^utf-?8$ /i ? 'UTF-8' : $cp;
     # $enc ||= ( split /\./, $ENV{LANG} )[-1];      # Cannot find encoding in some environment
         # binmode \*STDIN  => ":encoding($enc)";
         # binmode \*STDOUT => ":encoding($enc)";

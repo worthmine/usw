@@ -1,6 +1,7 @@
 use Test::Builder;
-use Encode qw(is_utf8 encode_utf8 decode_utf8);
-use lib 'lib';
+use Encode::Locale;
+use Encode qw(is_utf8 decode encode);
+binmode \*STDERR, ":encoding(console_out)";
 
 use usw;
 
@@ -19,23 +20,24 @@ $Test->subtest( 'After' => \&judgePlain, reader() );
 
 $Test->done_testing();
 
-exit;
+exit 0;
 
 sub judgePlain {
     $Test->plan( tests => scalar @_ );
     for ( 1 .. @_ ) {
         local $_ = shift;
         $Test->BAIL_OUT("no length") unless length;
-        $Test->is_num( is_utf8($_), !1, $_ );
+        $Test->ok( is_utf8($_) != 1, $_ );
     }
 }
 
 sub judgeDecoded {
-    $Test->plan( tests => scalar @_ );
-    for ( 1 .. @_ ) {
-        local $_ = shift;
-        $Test->BAIL_OUT("no length") unless length;
-        $Test->is_num( is_utf8($_), 1, encode_utf8($_) );    #: fail $_;
+    my @in = @_;
+    $Test->plan( tests => scalar @in);
+    for my $num ( 1 .. @in ) {
+        my $byteNum = decode locale => shift @in;
+        $Test->BAIL_OUT("no length") unless length $byteNum;
+        $Test->ok( is_utf8($byteNum), $_ );
     }
 }
 

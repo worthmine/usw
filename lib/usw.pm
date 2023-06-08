@@ -1,28 +1,35 @@
 package usw;
 use 5.012005;
 use parent qw(utf8 strict warnings);
-use Encode qw(is_utf8 encode_utf8 decode_utf8);
+use Encode::Locale;
+use Encode qw(is_utf8 decode encode);
 
 our $VERSION = "0.12";
-my $enc;
-sub _get_encoding {$enc}
+use parent qw(Exporter);
+our @EXPORT = qw( is_utf8 decode encode);
+our $ENCODING_LOCALE = $Encode::Locale::ENCODING_LOCALE || 'UTF-8';
 
 sub import {
     $_->import for qw( utf8 strict warnings );   # borrowed from https://metacpan.org/pod/Mojo::Base
-    require encoding;
-    my $cp = encoding::_get_locale_encoding();    # borrowed from https://metacpan.org/pod/open
-    $enc = $cp =~ /^utf-?8/i ? 'UTF-8' : $cp;
-    $enc ||= ( split /\./, $ENV{LANG} )[-1];      # Cannot find encoding in some environment
+    $| = 1;
+    if (-t) {
+        binmode \*STDIN,    ":encoding(console_in)";
+        binmode \*STDOUT,   ":encoding(console_out)";
+        binmode \*STDERR,   ":encoding(console_out)";
+    }else{
+        binmode "\\*$_" => ":encoding($ENCODING_LOCALE)" for  qw(STDIN STDOUT STDERR);
+   }
 
-    if ($enc) {
-        $| = 1;
-        binmode \*STDIN  => ":encoding($enc)";
-        binmode \*STDOUT => ":encoding($enc)";
-        binmode \*STDERR => ":encoding($enc)";
-    }
+    # require encoding;
+    # my $cp = encoding::_get_locale_encoding();    # borrowed from https://metacpan.org/pod/open
+    # $enc = $cp =~ /^utf-?8/i ? 'UTF-8' : $cp;
+    # $enc ||= ( split /\./, $ENV{LANG} )[-1];      # Cannot find encoding in some environment
+        # binmode \*STDIN  => ":encoding($enc)";
+        # binmode \*STDOUT => ":encoding($enc)";
+        # binmode \*STDERR => ":encoding($enc)";
 
-    $SIG{__WARN__} = \&_redecode;
-    $SIG{__DIE__}  = sub { die _redecode(@_) };
+#    $SIG{__WARN__} = \&_redecode;
+#    $SIG{__DIE__}  = sub { die _redecode(@_) };
     return;
 }
 

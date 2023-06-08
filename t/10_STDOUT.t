@@ -24,7 +24,7 @@ note $@ if $@;
 
 binmode \*STDOUT;    # set to default again
 
-eval { say STDOUT $string } or pass "dies when no binmode";
+eval { say STDOUT $string } or pass "dies when no binmode again";
 note $@ if $@;
 
 done_testing;

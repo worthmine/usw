@@ -24,15 +24,14 @@ SKIP: {
 }
 
 SKIP: {
-    my $enc = $usw::ENCODING_LOCALE;
+    my $enc = usw::get_encoding_locale();
     skip "there is no way to do `$com`",                      1 if $?;
-    skip 'this test is for the environment other than UTF-8', 1 if $enc eq 'UTF-8';
     open my $in, "<", encode locale_fs => 't/_12_STDIN/01_utf8.txt'  or fail "open failed: $!";
     open my $out, ">", encode locale_fs => 't/_12_STDIN/05_generated.txt' or fail "open failed: $!";
     my $count = 0;
     while (<$in>) {    # copying encoded lines from which was utf8;
         chomp;
-        say $out $_;
+        say $out $_;  
         $count++;
     }
     fail "lines are too less" if $count < 30;

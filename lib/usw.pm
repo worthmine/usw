@@ -7,29 +7,21 @@ use Encode qw(is_utf8 decode encode);
 our $VERSION = "0.12";
 use parent qw(Exporter);
 our @EXPORT = qw( is_utf8 decode encode);
-our $ENCODING_LOCALE = $Encode::Locale::ENCODING_LOCALE || 'UTF-8';
+sub get_encoding_locale { $Encode::Locale::ENCODING_LOCALE || 'UTF-8' }
 
 sub import {
     $_->import for qw( utf8 strict warnings );   # borrowed from https://metacpan.org/pod/Mojo::Base
     $| = 1;
     if (-t) {
-        binmode \*STDIN,    ":encoding(console_in)";
-        binmode \*STDOUT,   ":encoding(console_out)";
-        binmode \*STDERR,   ":encoding(console_out)";
+        binmode \*STDIN  => ":encoding(console_in)";
+        binmode \*STDOUT => ":encoding(console_out)";
+        binmode \*STDERR => ":encoding(console_out)";
     }else{
-        binmode "\\*$_" => ":encoding($ENCODING_LOCALE)" for  qw(STDIN STDOUT STDERR);
+        binmode "\\*$_" => ":encoding(locale)" for  qw(STDIN STDOUT STDERR);
    }
 
-    # require encoding;
-    # my $cp = encoding::_get_locale_encoding();    # borrowed from https://metacpan.org/pod/open
-    # $enc = $cp =~ /^utf-?8$ /i ? 'UTF-8' : $cp;
-    # $enc ||= ( split /\./, $ENV{LANG} )[-1];      # Cannot find encoding in some environment
-        # binmode \*STDIN  => ":encoding($enc)";
-        # binmode \*STDOUT => ":encoding($enc)";
-        # binmode \*STDERR => ":encoding($enc)";
-
-#    $SIG{__WARN__} = \&_redecode;
-#    $SIG{__DIE__}  = sub { die _redecode(@_) };
+    $SIG{__WARN__} = \&_redecode;
+    $SIG{__DIE__}  = sub { die _redecode(@_) };
     return;
 }
 
@@ -42,8 +34,8 @@ sub _redecode {
     $_[0] =~ /^(.+) at (.+) line (\d+)\.$/;
     my @texts = split $2, $_[0];
     return is_utf8($1)
-        ? $texts[0] || '' . decode_utf8($2) . $texts[1] || ''
-        : decode_utf8 $_[0];
+        ? $texts[0] || '' . decode( locale => $2 ) . $texts[1] || ''
+        : decode locale => $_[0];
 }
 
 1;
@@ -58,10 +50,11 @@ usw - use utf8; use strict; use warnings; in one line.
 
 =head1 SYNOPSIS
 
- use usw; # is just 8 bytes pragma instead of below:
+ use usw; # is like just 8 bytes pragma that works instead of below:
  use utf8;
  use strict;
  use warnings;
+ use Encode qw(is_utf8 decode encode);
  my $cp = '__YourCP__' || 'UTF-8';
  binmode \*STDIN,  ':encoding($cp)';
  binmode \*STDOUT, ':encoding($cp)';
@@ -106,12 +99,13 @@ of encoding only the file path like that:
  宣言あり at t/script/00_è­¦åãã.pl line 19.
 
 =head2 features
-
-Since version 0.07, you can relate automatically
-C<STDIN>,C<STDOUT>,C<STDERR> with C<cp\d+>
-which is detected by L<Win32> module.
+Since version 0.13, you don't have to insert C<use Encode qw(is_utf8 decode encode);> in your code.
 
 Since version 0.08, you don't have to care if the environment is a Windows or not.
+
+Since version 0.07, you can asign to C<STDIN>,C<STDOUT>,C<STDERR>
+with which is detected automatically.
+
 
 =head1 SEE ALSO
 
